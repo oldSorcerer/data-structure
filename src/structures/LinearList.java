@@ -41,6 +41,7 @@ public class LinearList<T> implements IList<T> {
                 }
                 else { // Есть резерв в начале массива
                     // Вставляем элемент влево и все что левее смещаем влево
+                    addLeft(elementToAdd, index);
                 }
             }
             else { // Вставляем во вторую половину списка
@@ -59,10 +60,17 @@ public class LinearList<T> implements IList<T> {
         sizeList++;
     }
 
+    private void addLeft (T elementToAdd, int index) {
+        for (int i = 0; i < index ; i++)
+            items[start + i - 1] = items[start + i];
+        start--;
+        items[start + index] = elementToAdd;
+    }
+
     private void addRight (T elementToAdd, int index) {
         for (int i = sizeList; i > index ; i--)
-            items[i] = items[i - 1];
-        items[index] = elementToAdd;
+            items[start + i] = items[start + i - 1];
+        items[start + index] = elementToAdd;
     }
 
     private void recreateItems(T elementToAdd, int index) {
