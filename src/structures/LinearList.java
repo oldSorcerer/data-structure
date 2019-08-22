@@ -55,7 +55,6 @@ public class LinearList<T> implements IList<T> {
 
         sizeList++;
     }
-
     @Override
     public void remove(int index) {
 
