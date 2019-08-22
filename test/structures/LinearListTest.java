@@ -67,7 +67,7 @@ class LinearListTest {
     }
 
     @Test
-    void addWith () {
+    void addWithLeftReserve() {
         LinearList<String> list = new LinearList<>(3);
         list.add("зовут");
         list.add("Собака");
@@ -79,5 +79,29 @@ class LinearListTest {
         assertEquals("меня",list.get(1));
         assertEquals("зовут",list.get(2));
         assertEquals("Собака",list.get(3));
+    }
+
+    @Test
+    void addWithLeftShift() {
+        LinearList<String> list = new LinearList<>(4);
+        list.add("Привет");
+        list.add("зовут");
+        list.add("Собака");
+        list.add("меня",1);
+        assertEquals(4, list.getSizeList());
+        assertEquals("Привет",list.get(0));
+        assertEquals("меня",list.get(1));
+        assertEquals("зовут",list.get(2));
+        assertEquals("Собака",list.get(3));
+    }
+
+    @Test
+    void addWithRightShift() {
+        LinearList<String> list = new LinearList<>(4);
+        list.add("меня");
+        list.add("зовут");
+        list.add("Привет",0);
+        list.add("Собака");
+        assertEquals(4, list.getSizeList());
     }
 }

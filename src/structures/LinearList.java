@@ -35,9 +35,10 @@ public class LinearList<T> implements IList<T> {
             items[start] = elementToAdd;
 
         else if (sizeList < items.length) { // Резерв есть!
-            if (index < sizeList / 2) { // Вставляем в первую половну списка
+            if (index <= sizeList / 2) { // Вставляем в первую половну списка
                 if (start == 0) { // Нет резерва в начале массива
                     // Добавить резерв слева, вставить элемент слева и весь список передвинуть вправо
+                    addLeftShift(elementToAdd,index);
                 }
                 else { // Есть резерв в начале массива
                     // Вставляем элемент влево и все что левее смещаем влево
@@ -51,6 +52,7 @@ public class LinearList<T> implements IList<T> {
                 }
                 else { // Нет резерва в конце массива
                     // Вставляем элемент слева, всё что левее его смещаем влево
+                    addRightShift(elementToAdd, index);
                 }
             }
         }
@@ -58,6 +60,18 @@ public class LinearList<T> implements IList<T> {
             recreateItems(elementToAdd, index);
 
         sizeList++;
+    }
+
+    private void addLeftShift (T elementToAdd, int index) {
+        start = (items.length - sizeList) / 2;
+
+        for (int i = sizeList - 1; i >= index ; i--)
+            items[start + i + 1] = items[i];
+
+        items[start + index] = elementToAdd;
+
+        for (int i = index; i >= 0 ; i--)
+            items[start + i] = items[i];
     }
 
     private void addLeft (T elementToAdd, int index) {
@@ -73,10 +87,20 @@ public class LinearList<T> implements IList<T> {
         items[start + index] = elementToAdd;
     }
 
+    private void addRightShift (T elementToAdd, int index) {
+        int newStart = start / 2;
+        for (int i = 0; i < index ; i++)
+            items[newStart + i] = items[start + i];
+        items[newStart + index] = elementToAdd;
+        for (int i = index; i < sizeList ; i++)
+            items[newStart + i + 1] = items[start + i];
+        start = newStart;
+    }
+
     private void recreateItems(T elementToAdd, int index) {
         int newStart = start;
 
-        if (newStart == 0 && index < sizeList / 2)
+        if (newStart == 0 && index <= sizeList / 2)
             newStart = (items.length * 2 - sizeList) / 2;
 
         Object[] newItems = new Object[items.length * 2];
@@ -94,11 +118,30 @@ public class LinearList<T> implements IList<T> {
 
     @Override
     public void remove(int index) {
+        if (index < 0 || index >= sizeList)
+            throw new IllegalArgumentException("Not correct index");
 
+        if (items.length > sizeList * 4) {
+
+        }
+        else {
+            if (index <= sizeList / 2) {
+
+            }
+            else {
+
+            }
+        }
+        sizeList--;
     }
 
     @Override
     public boolean remove(T element) {
+        int index = indexOf(element);
+        if (index >= 0) {
+            remove(index);
+            return true;
+        }
         return false;
     }
 
