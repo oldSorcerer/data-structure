@@ -195,4 +195,31 @@ public class SingleLinkedList <T> implements IList <T> {
         sizeList = 0;
 
     }
+
+    @Override
+    public void sort(boolean back) {
+
+        for (int i = sizeList ; i > 1 ; i--) {
+            Segment<T> segment = firstSegment;
+            for (int j = 1; j < i; j++) {
+                if (back) {
+                    if (segment.element == null ||
+                            ((Comparable<T>) segment.element).compareTo(segment.nextSegment.element) < 0) {
+                        T swap = segment.element;
+                        segment.element = segment.nextSegment.element;
+                        segment.nextSegment.element = swap;
+                    }
+                }
+                else {
+                    if (segment.element != null &&
+                            ((Comparable<T>) segment.element).compareTo(segment.nextSegment.element) > 0) {
+                        T swap = segment.element;
+                        segment.element = segment.nextSegment.element;
+                        segment.nextSegment.element = swap;
+                    }
+                }
+                segment = segment.nextSegment;
+            }
+        }
+    }
 }

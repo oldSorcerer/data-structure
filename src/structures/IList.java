@@ -11,5 +11,5 @@ public interface IList <T> {
     T set (T change, int index);
     int indexOf (T element);
     void clear();
-
+    void sort(boolean back);
 }

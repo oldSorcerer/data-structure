@@ -12,6 +12,7 @@ public class LinearList<T> implements IList<T> {
     public LinearList() {
         items = new Object[8];
     }
+
     public LinearList(int capacity) {
         if (capacity < 1)
             throw new IllegalArgumentException("Capacity must be greater than zero");
@@ -205,5 +206,10 @@ public class LinearList<T> implements IList<T> {
     public void clear() {
         Arrays.fill(items, null);
         sizeList = 0;
+    }
+
+    @Override
+    public void sort(boolean back) {
+
     }
 }

@@ -24,7 +24,6 @@ class StackTest {
         Stack <String> stringStack = new Stack<>();
         assertNull(stringStack.pop());
         assertEquals(0, stringStack.getSizeStack());
-
     }
 
     @Test

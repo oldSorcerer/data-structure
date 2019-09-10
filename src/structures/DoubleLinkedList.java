@@ -196,4 +196,9 @@ public class DoubleLinkedList <T> implements IList <T> {
         lastSegment = null;
         sizeList = 0;
     }
+
+    @Override
+    public void sort(boolean back) {
+
+    }
 }
