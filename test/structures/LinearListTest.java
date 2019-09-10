@@ -158,4 +158,15 @@ class LinearListTest {
         f.setAccessible(true);
         assertEquals(50, ((Object[])f.get(list)).length);
     }
+    @Test
+    void clear() {
+        LinearList<String> list = new LinearList<>();
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add(",");
+        list.add("Собака");
+        list.clear();
+        assertEquals(0,list.getSizeList());
+    }
 }

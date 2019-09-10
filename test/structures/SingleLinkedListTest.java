@@ -370,4 +370,15 @@ class SingleLinkedListTest {
         assertEquals("Собака", stringSingleLinkedList.get(3));
 
     }
+
+    @Test
+    void clear() {
+        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
+        stringSingleLinkedList.clear();
+        assertEquals(0, stringSingleLinkedList.getSizeList());
+    }
 }

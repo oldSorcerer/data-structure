@@ -10,5 +10,6 @@ public interface IList <T> {
     T get (int index);
     T set (T change, int index);
     int indexOf (T element);
+    void clear();
 
 }

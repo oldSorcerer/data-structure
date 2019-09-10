@@ -272,4 +272,16 @@ class DoubleLinkedListTest {
         assertFalse(list.remove("Привет!"));
         check(list);
     }
+    @Test
+    void clear() {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add("Собака");
+        list.clear();
+        assertEquals(0, list.getSizeList());
+
+
+    }
 }

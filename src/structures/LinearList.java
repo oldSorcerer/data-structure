@@ -1,5 +1,6 @@
 package structures;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class LinearList<T> implements IList<T> {
@@ -73,6 +74,7 @@ public class LinearList<T> implements IList<T> {
 
         for (int i = index; i >= 0 ; i--)
             items[start + i] = items[i];
+        Arrays.fill(items, 0, start, null);
     }
 
     private void addLeft (T elementToAdd, int index) {
@@ -99,6 +101,7 @@ public class LinearList<T> implements IList<T> {
                 items[newStart + i + 1] = items[start + i];
         }
         start = newStart;
+        Arrays.fill(items, start + sizeList, items.length, null);
     }
 
     private void recreateItems(T elementToAdd, int index) {
@@ -132,11 +135,13 @@ public class LinearList<T> implements IList<T> {
             if (index <= sizeList / 2) {
                 for (int i = index; i > 0 ; i--)
                     items[start + i] = items[start + i - 1];
+                items[start] = null;
                 start++;
             }
             else {
                 for (int i = index; i < sizeList - 1 ; i++)
                     items[start + i] = items[start + i + 1];
+                items[sizeList] = null;
             }
         }
         sizeList--;
@@ -194,5 +199,11 @@ public class LinearList<T> implements IList<T> {
                 return i;
         }
         return -1;
+    }
+
+    @Override
+    public void clear() {
+        Arrays.fill(items, null);
+        sizeList = 0;
     }
 }

@@ -189,4 +189,11 @@ public class DoubleLinkedList <T> implements IList <T> {
         }*/
         return -1;
     }
+
+    @Override
+    public void clear() {
+        firstSegment = null;
+        lastSegment = null;
+        sizeList = 0;
+    }
 }

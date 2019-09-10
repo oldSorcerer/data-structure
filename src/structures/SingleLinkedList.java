@@ -187,4 +187,12 @@ public class SingleLinkedList <T> implements IList <T> {
         }
         return -1;
     }
+
+    @Override
+    public void clear() {
+        firstSegment = null;
+        lastSegment = null;
+        sizeList = 0;
+
+    }
 }
