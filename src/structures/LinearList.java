@@ -16,6 +16,7 @@ public class LinearList<T> implements IList<T> {
             throw new IllegalArgumentException("Capacity must be greater than zero");
         items = new Object[capacity];
     }
+
     @Override
     public int getSizeList() {
         return sizeList;
@@ -92,8 +93,11 @@ public class LinearList<T> implements IList<T> {
         for (int i = 0; i < index ; i++)
             items[newStart + i] = items[start + i];
         items[newStart + index] = elementToAdd;
-        for (int i = index; i < sizeList ; i++)
-            items[newStart + i + 1] = items[start + i];
+
+        if (newStart != start - 1) {
+            for (int i = index; i < sizeList; i++)
+                items[newStart + i + 1] = items[start + i];
+        }
         start = newStart;
     }
 
@@ -109,7 +113,7 @@ public class LinearList<T> implements IList<T> {
 
         newItems[newStart + index] = elementToAdd;
 
-        for (int i = index; i <sizeList ; i++)
+        for (int i = index; i < sizeList ; i++)
             newItems[newStart + i + 1] = items[start + i];
 
         items = newItems;
@@ -122,17 +126,37 @@ public class LinearList<T> implements IList<T> {
             throw new IllegalArgumentException("Not correct index");
 
         if (items.length > sizeList * 4) {
-
+            recreateItems(index);
         }
         else {
             if (index <= sizeList / 2) {
-
+                for (int i = index; i > 0 ; i--)
+                    items[start + i] = items[start + i - 1];
+                start++;
             }
             else {
-
+                for (int i = index; i < sizeList - 1 ; i++)
+                    items[start + i] = items[start + i + 1];
             }
         }
         sizeList--;
+    }
+
+    private void recreateItems(int index) {
+        int newStart = start;
+
+        if (newStart == 0)
+            newStart = (items.length / 2 - sizeList) / 2;
+
+        Object[] newItems = new Object[items.length / 2];
+        for (int i = 0; i < index; i++)
+            newItems[newStart + i] = items[start + i];
+
+        for (int i = index; i < sizeList - 1; i++)
+            newItems[newStart + i] = items[start + i + 1];
+
+        items = newItems;
+        start = newStart;
     }
 
     @Override

@@ -2,6 +2,8 @@ package structures;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinearListTest {
@@ -103,5 +105,57 @@ class LinearListTest {
         list.add("Привет",0);
         list.add("Собака");
         assertEquals(4, list.getSizeList());
+    }
+
+    @Test
+    void removeLeft() {
+        LinearList<String> list = new LinearList<>();
+        list.add("Привет");
+        list.add(",");
+        list.add("меня");
+        list.add("зовут");
+        list.add("Собака");
+        list.remove(1);
+        assertEquals(4,list.getSizeList());
+        assertEquals("Привет",list.get(0));
+        assertEquals("меня",list.get(1));
+        assertEquals("зовут",list.get(2));
+        assertEquals("Собака",list.get(3));
+
+    }
+
+    @Test
+    void removeRight() {
+        LinearList<String> list = new LinearList<>();
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add(",");
+        list.add("Собака");
+        list.remove(3);
+        assertEquals(4,list.getSizeList());
+        assertEquals("Привет",list.get(0));
+        assertEquals("меня",list.get(1));
+        assertEquals("зовут",list.get(2));
+        assertEquals("Собака",list.get(3));
+    }
+
+    @Test
+    void remove() throws NoSuchFieldException, IllegalAccessException {
+        LinearList<String> list = new LinearList<>(100);
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add(",");
+        list.add("Собака");
+        list.remove(3);
+        assertEquals(4,list.getSizeList());
+        assertEquals("Привет",list.get(0));
+        assertEquals("меня",list.get(1));
+        assertEquals("зовут",list.get(2));
+        assertEquals("Собака",list.get(3));
+        Field f = LinearList.class.getDeclaredField("items");
+        f.setAccessible(true);
+        assertEquals(50, ((Object[])f.get(list)).length);
     }
 }
