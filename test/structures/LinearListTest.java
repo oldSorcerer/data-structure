@@ -167,6 +167,6 @@ class LinearListTest {
         list.add(",");
         list.add("Собака");
         list.clear();
-        assertEquals(0,list.getSizeList());
+        assertEquals(0, list.getSizeList());
     }
 }
