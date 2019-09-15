@@ -1,6 +1,8 @@
 package structures;
 
-public interface IList <T> {
+import java.util.Iterator;
+
+public interface IList <T> extends Iterable<T> {
 
     int getSizeList();
     void add (T elementToAdd);

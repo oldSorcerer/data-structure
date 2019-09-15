@@ -323,4 +323,24 @@ class DoubleLinkedListTest {
         }
     }
 
+    @Test
+    void iterator() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.add(5);
+        list.add(4);
+        list.add(-9);
+        list.add(-25);
+        list.add(50);
+        list.add(78);
+        list.add(20);
+        list.add(-25);
+
+        int idx = 0;
+
+        for (Integer i : list)
+            assertEquals(list.get(idx++), i);
+
+        assertEquals(list.getSizeList(), idx);
+    }
+
 }

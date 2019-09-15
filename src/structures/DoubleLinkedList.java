@@ -1,5 +1,7 @@
 package structures;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class DoubleLinkedList <T> implements IList <T> {
@@ -211,4 +213,30 @@ public class DoubleLinkedList <T> implements IList <T> {
             }
         }
     }
+
+    private  class SIterator implements Iterator<T>{
+
+        private DoubleSegment<T> segment = firstSegment;
+
+        @Override
+        public boolean hasNext() {
+            return segment != null;
+        }
+
+        @Override
+        public T next() {
+            if (segment == null)
+                throw new NoSuchElementException();
+            T temp = segment.element;
+            segment = segment.nextSegment;
+            return temp;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new SIterator();
+    }
+
+
 }

@@ -1,8 +1,6 @@
 package structures;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class LinearList<T> implements IList<T> {
 
@@ -217,12 +215,15 @@ public class LinearList<T> implements IList<T> {
     private void sort(int begin, int size, boolean back) {
         if (size <= 1)
             return;
+
         Random r = new Random();
         int idx = r.nextInt(size);
+
         Object tmp = items[begin + idx];
         items[begin + idx] = items[begin];
         items[begin] = tmp;
         idx = 0;
+
         for (int i = 1; i < size ; i++) {
             if (Utils.compare((T)items[begin + idx], (T)items[begin + i], back)) {
                 items[begin + idx] = items[begin + i];
@@ -234,5 +235,27 @@ public class LinearList<T> implements IList<T> {
 
         sort(begin, idx, back);
         sort(begin + idx + 1, size - idx - 1, back);
+    }
+
+    private class SIterator implements Iterator<T> {
+
+        private int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < sizeList;
+        }
+
+        @Override
+        public T next() {
+            if (index >= sizeList)
+                throw new NoSuchElementException();
+            return (T) items[start + index++];
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new SIterator();
     }
 }
