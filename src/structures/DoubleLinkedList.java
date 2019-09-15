@@ -197,19 +197,12 @@ public class DoubleLinkedList <T> implements IList <T> {
         sizeList = 0;
     }
 
-    private  boolean compare(T element1, T element2, boolean back) {
-        if (back)
-            return element1 == null || ((Comparable<T>) element1).compareTo(element2) < 0;
-        else
-            return element1 != null && ((Comparable<T>) element1).compareTo(element2) > 0;
-    }
-
     @Override
     public void sort(boolean back) {
         for (int i = sizeList ; i > 1 ; i--) {
             DoubleSegment<T> segment = firstSegment;
             for (int j = 1; j < i; j++) {
-                if (compare(segment.element, segment.nextSegment.element, back)) {
+                if (Utils.compare(segment.element, segment.nextSegment.element, back)) {
                     T swap = segment.element;
                     segment.element = segment.nextSegment.element;
                     segment.nextSegment.element = swap;
