@@ -237,25 +237,23 @@ public class LinearList<T> implements IList<T> {
         sort(begin + idx + 1, size - idx - 1, back);
     }
 
-    private class SIterator implements Iterator<T> {
-
-        private int index = 0;
-
-        @Override
-        public boolean hasNext() {
-            return index < sizeList;
-        }
-
-        @Override
-        public T next() {
-            if (index >= sizeList)
-                throw new NoSuchElementException();
-            return (T) items[start + index++];
-        }
-    }
-
     @Override
     public Iterator<T> iterator() {
-        return new SIterator();
+        return new Iterator() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < sizeList;
+            }
+
+            @Override
+            public T next() {
+                if (index >= sizeList)
+                    throw new NoSuchElementException();
+                return (T) items[start + index++];
+            }
+        };
     }
 }

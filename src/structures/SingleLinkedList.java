@@ -214,27 +214,25 @@ public class SingleLinkedList <T> implements IList <T> {
         }
     }
 
-    private  class SIterator implements Iterator<T>{
-
-        private Segment<T> segment = firstSegment;
-
-        @Override
-        public boolean hasNext() {
-            return segment != null;
-        }
-
-        @Override
-        public T next() {
-            if (segment == null)
-                throw new NoSuchElementException();
-            T temp = segment.element;
-            segment = segment.nextSegment;
-            return temp;
-        }
-    }
-
     @Override
     public Iterator<T> iterator() {
-        return new SIterator();
+        return new Iterator() {
+
+            private Segment<T> segment = firstSegment;
+
+            @Override
+            public boolean hasNext() {
+                return segment != null;
+            }
+
+            @Override
+            public T next() {
+                if (segment == null)
+                    throw new NoSuchElementException();
+                T temp = segment.element;
+                segment = segment.nextSegment;
+                return temp;
+            }
+        };
     }
 }
