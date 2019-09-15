@@ -169,4 +169,45 @@ class LinearListTest {
         list.clear();
         assertEquals(0, list.getSizeList());
     }
+
+    @Test
+    void sort() {
+        LinearList<Integer> list = new LinearList<>();
+        list.add(5);
+        list.add(4);
+        list.add(-9);
+        list.add(-25);
+        list.add(50);
+        list.add(78);
+        list.add(20);
+        list.add(-25);
+        list.sort(false);
+
+        System.out.println(list.get(0));
+        for (int i = 1; i < list.getSizeList(); i++) {
+            assertTrue(list.get(i - 1) <= list.get(i));
+            System.out.println(list.get(i));
+        }
+    }
+
+    @Test
+    void sortBack() {
+        LinearList<Integer> list = new LinearList<>();
+        list.add(5);
+        list.add(4);
+        list.add(-9);
+        list.add(-25);
+        list.add(50);
+        list.add(78);
+        list.add(20);
+        list.add(-25);
+        list.sort(true);
+
+        System.out.println(list.get(0));
+        for (int i = 1; i < list.getSizeList(); i++) {
+            assertTrue(list.get(i - 1) >= list.get(i));
+            System.out.println(list.get(i));
+        }
+    }
+
 }

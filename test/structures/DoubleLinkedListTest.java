@@ -282,6 +282,7 @@ class DoubleLinkedListTest {
         list.clear();
         assertEquals(0, list.getSizeList());
     }
+
     @Test
     void sort() {
         DoubleLinkedList<Integer> list = new DoubleLinkedList<>();

@@ -2,6 +2,7 @@ package structures;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
 public class LinearList<T> implements IList<T> {
 
@@ -208,8 +209,37 @@ public class LinearList<T> implements IList<T> {
         sizeList = 0;
     }
 
+    private  boolean compare(T element1, T element2, boolean back) {
+        if (back)
+            return element1 == null || ((Comparable<T>) element1).compareTo(element2) < 0;
+        else
+            return element1 != null && ((Comparable<T>) element1).compareTo(element2) > 0;
+    }
+
     @Override
     public void sort(boolean back) {
+        sort(start, sizeList, back);
+    }
 
+    private void sort(int begin, int size, boolean back) {
+        if (size <= 1)
+            return;
+        Random r = new Random();
+        int idx = r.nextInt(size);
+        Object tmp = items[begin + idx];
+        items[begin + idx] = items[begin];
+        items[begin] = tmp;
+        idx = 0;
+        for (int i = 1; i < size ; i++) {
+            if (compare((T)items[begin + idx], (T)items[begin + i], back)) {
+                items[begin + idx] = items[begin + i];
+                items[begin + i] = items[begin + idx + 1];
+                items[begin + idx + 1] = tmp;
+                idx++;
+            }
+        }
+
+        sort(begin, idx, back);
+        sort(begin + idx + 1, size - idx - 1, back);
     }
 }
