@@ -250,10 +250,13 @@ public class DoubleLinkedList <T> implements IList <T> {
             segment = segment.nextSegment;
         }
 
+        sortParts(begin, size, back, idx, current);
+    }
+
+    private void sortParts(DoubleSegment<T> begin, int size, boolean back, int idx, DoubleSegment<T> current) {
         if (Runtime.getRuntime().availableProcessors() > 1) { // Проверка количество ядер процессора
             // Реализация многопоточности!
-            int finalIdx = idx; // Замкнуть можно только неизменяемую переменную
-            Thread t = new Thread(() -> sort(begin, finalIdx, back)); // Создаём поток и передаём ему лямбда-выражение
+            Thread t = new Thread(() -> sort(begin, idx, back)); // Создаём поток и передаём ему лямбда-выражение
             // - что будет выполняться в этом потоке
             t.start(); // Запускаем фоновый поток
             sort(current.nextSegment, size - idx - 1, back); // В текущем потоке сортируем вторую часть списка
