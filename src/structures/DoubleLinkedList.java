@@ -1,14 +1,14 @@
 package structures;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class DoubleLinkedList <T> implements IList <T> {
 
     private DoubleSegment<T> firstSegment;
     private DoubleSegment<T> lastSegment;
     private int sizeList;
+
+    public boolean quickSort;
 
     @Override
     public int getSizeList() {
@@ -199,18 +199,73 @@ public class DoubleLinkedList <T> implements IList <T> {
         sizeList = 0;
     }
 
+
     @Override
     public void sort(boolean back) {
-        for (int i = sizeList ; i > 1 ; i--) {
-            DoubleSegment<T> segment = firstSegment;
-            for (int j = 1; j < i; j++) {
-                if (Utils.compare(segment.element, segment.nextSegment.element, back)) {
-                    T swap = segment.element;
-                    segment.element = segment.nextSegment.element;
-                    segment.nextSegment.element = swap;
+        if (quickSort)
+            sort(firstSegment, sizeList, back);
+        else {
+            for (int i = sizeList; i > 1; i--) {
+                DoubleSegment<T> segment = firstSegment;
+                for (int j = 1; j < i; j++) {
+                    if (Utils.compare(segment.element, segment.nextSegment.element, back)) {
+                        T swap = segment.element;
+                        segment.element = segment.nextSegment.element;
+                        segment.nextSegment.element = swap;
+                    }
+                    segment = segment.nextSegment;
                 }
-                segment = segment.nextSegment;
             }
+        }
+    }
+
+    private void sort (DoubleSegment<T> begin, int size, boolean back)  {
+
+        if (size <= 1)
+            return;
+
+        Random r = new Random();
+
+        DoubleSegment<T> segment = begin;
+        for (int i = r.nextInt(size); i > 0; i--) {
+            segment = segment.nextSegment;
+        }
+
+        T tmp = segment.element;
+        segment.element = begin.element;
+        begin.element = tmp;
+        segment = begin.nextSegment;
+        int idx = 0;
+
+        DoubleSegment<T> current = begin;
+
+        for (int i = 1; i < size; i++) {
+            if (Utils.compare(tmp, segment.element, back)) {
+                current.element = segment.element;
+                segment.element = current.nextSegment.element;
+                current.nextSegment.element = tmp;
+                current = current.nextSegment;
+                idx++;
+            }
+            segment = segment.nextSegment;
+        }
+
+        if (Runtime.getRuntime().availableProcessors() > 1) { // Проверка количество ядер процессора
+            // Реализация многопоточности!
+            int finalIdx = idx; // Замкнуть можно только неизменяемую переменную
+            Thread t = new Thread(() -> sort(begin, finalIdx, back)); // Создаём поток и передаём ему лямбда-выражение
+            // - что будет выполняться в этом потоке
+            t.start(); // Запускаем фоновый поток
+            sort(current.nextSegment, size - idx - 1, back); // В текущем потоке сортируем вторую часть списка
+            try {
+                t.join(); // Ждём завершения фонового потока, если первая часть списка оказалась больше второй
+            } catch (InterruptedException e) {
+                // Во время ожидания поток может быть прерван - это проверяемое исключение
+            }
+        }
+        else {
+            sort(begin, idx, back);
+            sort(current.nextSegment, size - idx - 1, back);
         }
     }
 
@@ -234,6 +289,4 @@ public class DoubleLinkedList <T> implements IList <T> {
             }
         };
     }
-
-
 }

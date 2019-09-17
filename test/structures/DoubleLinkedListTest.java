@@ -306,6 +306,7 @@ class DoubleLinkedListTest {
     @Test
     void sortBack() {
         DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.quickSort = true;
         list.add(5);
         list.add(4);
         list.add(-9);
@@ -321,6 +322,30 @@ class DoubleLinkedListTest {
             assertTrue(list.get(i - 1) >= list.get(i));
             System.out.println(list.get(i));
         }
+    }
+
+    @Test
+    void sortFew() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.quickSort = true;
+        list.sort(true);
+
+        for (int i = 1; i < list.getSizeList(); i++)
+            assertTrue(list.get(i - 1) >= list.get(i));
+
+        list.add(5);
+        list.sort(true);
+
+        for (int i = 1; i < list.getSizeList(); i++)
+            assertTrue(list.get(i - 1) >= list.get(i));
+
+
+        list.add(4);
+        list.sort(true);
+
+        for (int i = 1; i < list.getSizeList(); i++)
+            assertTrue(list.get(i - 1) >= list.get(i));
+
     }
 
     @Test
