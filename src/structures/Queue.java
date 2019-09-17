@@ -1,15 +1,17 @@
 package structures;
 
-public class Queue <T> {
+public class Queue <T> implements IQueue<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;
     private int sizeQueue;
 
+    @Override
     public int getSizeQueue() {
         return sizeQueue;
     }
 
+    @Override
     public void put(T elementToAdd){
         if (elementToAdd == null)
             throw new IllegalArgumentException("New element cannot be null");
@@ -25,6 +27,7 @@ public class Queue <T> {
         sizeQueue++;
     }
 
+    @Override
     public T firstElement(){
         if (sizeQueue == 0)
             return null;
@@ -37,6 +40,7 @@ public class Queue <T> {
         return lastSegment.element;
     }
 
+    @Override
     public T get(){
         if (sizeQueue == 0)
             return null;
