@@ -368,4 +368,41 @@ class DoubleLinkedListTest {
         assertEquals(list.getSizeList(), idx);
     }
 
+    @Test
+    void min() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.add(5);
+        list.add(4);
+        list.add(-9);
+        list.add(-25);
+        list.add(50);
+        list.add(78);
+        list.add(20);
+        list.add(-25);
+
+        assertEquals(-25, list.min());
+    }
+
+    @Test
+    void minEmpty() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+
+        assertEquals(null, list.min());
+    }
+
+    @Test
+    void max() {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.add(5);
+        list.add(4);
+        list.add(-9);
+        list.add(-25);
+        list.add(50);
+        list.add(78);
+        list.add(20);
+        list.add(-25);
+
+        assertEquals(78, list.max());
+    }
+
 }
