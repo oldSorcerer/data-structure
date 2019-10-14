@@ -43,6 +43,9 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
 
     @Override
     public boolean remove(T element) {
+
+
+
         return false;
     }
 
@@ -57,26 +60,48 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
     }
 
     @Override
-    public T getLeftChild() {
-        return null;
-    }
-
-    @Override
-    public T getRightChild() {
-        return null;
-    }
-
-    @Override
-    public T getParent() {
-        return null;
-    }
-
-    @Override
     public Iterator<T> iterator() {
-        SingleLinkedList<T> list = new SingleLinkedList<>();
-        addNode(list, root);
+        return new Iterator<T>() {
+            private int counter = 0;
+            private Node<T> currentNode = mostLeftChild(root);
 
-        return list.iterator();
+            @Override
+            public boolean hasNext() {
+                return counter < sizeTree;
+            }
+
+            @Override
+            public T next() {
+                Node<T> result = currentNode;
+
+                if (currentNode.rightChild == null) {
+                    if (currentNode.parent != null && currentNode.parent.leftChild == currentNode) {
+                        currentNode = currentNode.parent;
+                    }
+                    else {
+                        Node<T> current = currentNode.parent;
+
+                        while (current != null && current.parent != null && current == current.parent.rightChild) {
+                            current = current.parent;
+                        }
+                        if (current != null)
+                            current = current.parent;
+                        currentNode = current;
+                    }
+                }
+                else currentNode = mostLeftChild(currentNode.rightChild);
+
+                counter++;
+                return result.element;
+            }
+        };
+    }
+
+    private Node<T> mostLeftChild(Node<T> current) {
+        while (current != null && current.leftChild !=null) {
+            current = current.leftChild;
+        }
+        return current;
     }
 
     private Node<T> findNode(T element, boolean parent) {
@@ -99,13 +124,5 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
         } while (current != null);
 
         return parent ? parentNode : null;
-    }
-
-    private void addNode(SingleLinkedList<T> list, Node<T> node) {
-        if (node == null)
-            return;
-        addNode(list, node.leftChild);
-        list.add(node.element);
-        addNode(list, node.rightChild);
     }
 }

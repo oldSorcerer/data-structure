@@ -8,8 +8,4 @@ public interface ITree <T> extends Iterable<T> {
     boolean contains(T element);
 
     T getRoot();
-    T getLeftChild();
-    T getRightChild();
-    T getParent();
-
 }
