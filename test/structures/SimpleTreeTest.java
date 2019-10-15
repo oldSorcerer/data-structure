@@ -66,4 +66,27 @@ class SimpleTreeTest {
         assertTrue(tree.contains(91));
         assertFalse(tree.contains(10));
     }
+
+    @Test
+    void remove() {
+        SimpleTree<Integer> tree = new SimpleTree<>();
+        tree.add(4);
+        tree.add(2);
+        tree.add(6);
+        tree.add(1);
+        tree.add(3);
+        tree.add(5);
+        tree.add(7);
+        tree.add(5);
+        tree.remove(6);
+        assertFalse(tree.contains(6));
+
+        int  previuos = -1;
+        for (int element: tree) {
+            System.out.println(element);
+            assertTrue(previuos < element);
+            previuos = element;
+        }
+
+    }
 }
