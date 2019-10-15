@@ -54,89 +54,85 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
                 root = null;
             else if (removeNode.parent.leftChild == removeNode)
                 removeNode.parent.leftChild = null;
-            else removeNode.parent.rightChild = null;
+            else
+                removeNode.parent.rightChild = null;
         }
         else if (removeNode.leftChild != null && removeNode.rightChild == null) {
-            if (removeNode == root) {
-                root = removeNode.leftChild;
-                root.parent = null;
-            }
-            else if (removeNode.parent.leftChild == removeNode) {
-                removeNode.parent.leftChild = removeNode.leftChild;
-                removeNode.leftChild.parent = removeNode.parent;
-            }
-            else {
-                removeNode.parent.rightChild = removeNode.leftChild;
-                removeNode.leftChild.parent = removeNode.parent;
-            }
+            removeWithOneChild(removeNode, true);
         }
         else if (removeNode.leftChild == null && removeNode.rightChild != null) {
-            if (removeNode == root) {
-                root = removeNode.rightChild;
-                root.parent = null;
-            }
-            else if (removeNode.parent.leftChild == removeNode) {
-                removeNode.parent.leftChild = removeNode.rightChild;
-                removeNode.rightChild.parent = removeNode.parent;
-            }
-            else {
-                removeNode.parent.rightChild = removeNode.rightChild;
-                removeNode.rightChild.parent = removeNode.parent;
-            }
+            removeWithOneChild(removeNode, false);
         }
         else {
             if (removeNode == root) {
                 if (new Random().nextBoolean()) {
                     root = removeNode.leftChild;
                     root.parent = null;
-                    Node<T> right = mostChild(removeNode.leftChild, false);
-                    right.rightChild = removeNode.rightChild;
-                    removeNode.rightChild.parent = right;
+                    hangRight(removeNode);
                 }
                 else {
                     root = removeNode.rightChild;
                     root.parent = null;
-                    Node<T> left = mostChild(removeNode.rightChild, true);
-                    left.leftChild = removeNode.leftChild;
-                    removeNode.leftChild.parent = left;
+                    hangLeft(removeNode);
                 }
             }
             else if (removeNode.parent.leftChild == removeNode) {
-                if (new Random().nextBoolean()) {
-                    removeNode.parent.leftChild = removeNode.leftChild;
-                    removeNode.leftChild.parent = removeNode.parent;
-                    Node<T> right = mostChild(removeNode.leftChild, false);
-                    right.rightChild = removeNode.rightChild;
-                    removeNode.rightChild.parent = right;
-                }
-                else {
-                    removeNode.parent.leftChild = removeNode.rightChild;
-                    removeNode.rightChild.parent = removeNode.parent;
-                    Node<T> left = mostChild(removeNode.rightChild, true);
-                    left.leftChild = removeNode.leftChild;
-                    removeNode.leftChild.parent = left;
-                }
-
+                removeBothChildren(removeNode, true);
             }
             else {
-                if (new Random().nextBoolean()) {
-                    removeNode.parent.rightChild = removeNode.leftChild;
-                    removeNode.leftChild.parent = removeNode.parent;
-                    Node<T> right = mostChild(removeNode.leftChild, false);
-                    right.rightChild = removeNode.rightChild;
-                    removeNode.rightChild.parent = right;
-                }
-                else {
-                    removeNode.parent.rightChild = removeNode.rightChild;
-                    removeNode.rightChild.parent = removeNode.parent;
-                    Node<T> left = mostChild(removeNode.rightChild, true);
-                    left.leftChild = removeNode.leftChild;
-                    removeNode.leftChild.parent = left;
-                }
+                removeBothChildren(removeNode, false);
             }
         }
         sizeTree--;
         return true;
+    }
+
+    private void removeBothChildren(Node<T> removeNode, boolean isLeft) {
+        if (new Random().nextBoolean()) {
+            if (isLeft)
+                removeNode.parent.leftChild = removeNode.leftChild;
+            else
+                removeNode.parent.rightChild = removeNode.leftChild;
+
+            removeNode.leftChild.parent = removeNode.parent;
+            hangRight(removeNode);
+        }
+        else {
+            if (isLeft)
+                removeNode.parent.leftChild = removeNode.rightChild;
+            else
+                removeNode.parent.rightChild = removeNode.rightChild;
+
+            removeNode.rightChild.parent = removeNode.parent;
+            hangLeft(removeNode);
+        }
+    }
+
+    private void hangLeft(Node<T> removeNode) {
+        Node<T> left = mostChild(removeNode.rightChild, true);
+        left.leftChild = removeNode.leftChild;
+        removeNode.leftChild.parent = left;
+    }
+
+    private void hangRight(Node<T> removeNode) {
+        Node<T> right = mostChild(removeNode.leftChild, false);
+        right.rightChild = removeNode.rightChild;
+        removeNode.rightChild.parent = right;
+    }
+
+    private void removeWithOneChild(Node<T> removeNode, boolean isLeft) {
+        if (removeNode == root) {
+            root = (isLeft ? removeNode.leftChild : removeNode.rightChild);
+            root.parent = null;
+        }
+        else if (removeNode.parent.leftChild == removeNode) {
+            removeNode.parent.leftChild = (isLeft ? removeNode.leftChild : removeNode.rightChild);
+            (isLeft ? removeNode.leftChild : removeNode.rightChild).parent = removeNode.parent;
+        }
+        else {
+            removeNode.parent.rightChild = (isLeft ? removeNode.leftChild : removeNode.rightChild);
+            (isLeft ? removeNode.leftChild : removeNode.rightChild).parent = removeNode.parent;
+        }
     }
 
     @Override
