@@ -235,4 +235,10 @@ public class SingleLinkedList <T> implements IList <T> {
             }
         };
     }
+
+    class Segment<T> {
+        public T element;
+        public Segment<T> nextSegment;
+    }
+
 }

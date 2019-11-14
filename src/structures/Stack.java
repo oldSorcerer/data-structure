@@ -37,4 +37,9 @@ public class Stack <T> {
         return lastSegment.element;
     }
 
+    class Segment<T> {
+        public T element;
+        public Segment<T> nextSegment;
+    }
+
 }

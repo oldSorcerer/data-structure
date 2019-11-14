@@ -50,4 +50,10 @@ public class Queue <T> implements IQueue<T> {
         sizeQueue--;
         return retElement;
     }
+
+    private class Segment<T> {
+        public T element;
+        public Segment<T> nextSegment;
+    }
+
 }
