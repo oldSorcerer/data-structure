@@ -1,4 +1,4 @@
-package structures;
+package structures.List;
 
 public class Stack <T> {
 

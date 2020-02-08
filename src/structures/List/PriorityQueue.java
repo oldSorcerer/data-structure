@@ -1,9 +1,11 @@
-package structures;
+package structures.List;
+
+import structures.Utils;
 
 public class PriorityQueue <T extends Comparable <T>> implements IQueue<T> {
 
     private boolean min;
-    private LinearList <T> list = new LinearList<>();
+    private LinearList<T> list = new LinearList<>();
 
     public PriorityQueue(boolean min) {
         this.min = min;

@@ -1,10 +1,11 @@
-package structures;
+package structures.List;
 
+import structures.Utils;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SingleLinkedList <T> implements IList <T> {
+public class SingleLinkedList <T> implements IList<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;

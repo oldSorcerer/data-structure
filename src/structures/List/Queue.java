@@ -1,4 +1,4 @@
-package structures;
+package structures.List;
 
 public class Queue <T> implements IQueue<T> {
 

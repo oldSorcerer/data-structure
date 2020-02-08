@@ -1,4 +1,4 @@
-package structures;
+package structures.Tree;
 
 class Node <T extends Comparable<T>>  {
 

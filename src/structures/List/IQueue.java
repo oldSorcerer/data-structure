@@ -1,4 +1,4 @@
-package structures;
+package structures.List;
 
 public interface IQueue<T> {
     int getSizeQueue();

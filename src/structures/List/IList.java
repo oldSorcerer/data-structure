@@ -1,6 +1,6 @@
-package structures;
+package structures.List;
 
-import java.util.Iterator;
+import structures.Utils;
 
 public interface IList <T> extends Iterable<T> {
 

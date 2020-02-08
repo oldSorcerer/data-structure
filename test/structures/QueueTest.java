@@ -1,6 +1,7 @@
 package structures;
 
 import org.junit.jupiter.api.Test;
+import structures.List.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +9,7 @@ class QueueTest {
 
     @Test
     void put() {
-        Queue <String> stringQueue = new Queue<>();
+        Queue<String> stringQueue = new Queue<>();
         stringQueue.put("Привет");
         stringQueue.put("меня");
         stringQueue.put("зовут");

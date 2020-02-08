@@ -1,4 +1,4 @@
-package structures;
+package structures.List;
 
 class Segment<T> {
     public T element;

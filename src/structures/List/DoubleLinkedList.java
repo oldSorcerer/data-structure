@@ -1,8 +1,9 @@
-package structures;
+package structures.List;
 
+import structures.Utils;
 import java.util.*;
 
-public class DoubleLinkedList <T> implements IList <T> {
+public class DoubleLinkedList <T> implements IList<T> {
 
     private DoubleSegment<T> firstSegment;
     private DoubleSegment<T> lastSegment;

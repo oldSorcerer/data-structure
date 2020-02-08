@@ -1,4 +1,4 @@
-package structures;
+package structures.Tree;
 
 public interface ITree <T> extends Iterable<T> {
 

@@ -1,8 +1,7 @@
 package structures;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
+import structures.List.DoubleLinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -404,5 +403,17 @@ class DoubleLinkedListTest {
 
         assertEquals(78, list.max());
     }
+
+    /*@Test
+    void maxString() {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add("Собака");
+
+        assertEquals("привет", list.max());
+
+    }*/
 
 }

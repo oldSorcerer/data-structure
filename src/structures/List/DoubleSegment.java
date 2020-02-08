@@ -1,4 +1,4 @@
-package structures;
+package structures.List;
 
 class DoubleSegment <T> {
     public T element;

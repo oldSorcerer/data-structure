@@ -1,6 +1,7 @@
 package structures;
 
 import org.junit.jupiter.api.Test;
+import structures.Tree.SimpleTree;
 
 import java.util.Random;
 

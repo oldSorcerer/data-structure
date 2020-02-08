@@ -1,6 +1,8 @@
 package structures;
 
-class Utils {
+import structures.List.IList;
+
+public class Utils {
 
     public static <T> boolean compare(T element1, T element2, boolean back) {
         if (back)

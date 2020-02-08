@@ -1,6 +1,7 @@
 package structures;
 
 import org.junit.jupiter.api.Test;
+import structures.List.Stack;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,7 +9,7 @@ class StackTest {
 
     @Test
     void push() {
-        Stack <String> stringStack = new Stack<>();
+        Stack<String> stringStack = new Stack<>();
         stringStack.push("Привет");
         stringStack.push("меня");
         stringStack.push("зовут");
