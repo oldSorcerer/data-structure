@@ -1,7 +1,7 @@
-package structures;
+package structures.List;
 
 import org.junit.jupiter.api.Test;
-import structures.List.Stack;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

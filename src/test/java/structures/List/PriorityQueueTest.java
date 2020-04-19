@@ -1,9 +1,8 @@
-package structures;
+package structures.List;
 
 import org.junit.jupiter.api.Test;
-import structures.List.PriorityQueue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PriorityQueueTest {
 

@@ -1,7 +1,6 @@
-package structures;
+package structures.List;
 
 import org.junit.jupiter.api.Test;
-import structures.List.LinearList;
 
 import java.lang.reflect.Field;
 

@@ -1,6 +1,7 @@
 package structures.List;
 
 import structures.Utils;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;

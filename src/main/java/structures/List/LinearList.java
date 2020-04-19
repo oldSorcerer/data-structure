@@ -1,6 +1,7 @@
 package structures.List;
 
 import structures.Utils;
+
 import java.util.*;
 
 public class LinearList<T> implements IList<T> {

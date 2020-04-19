@@ -1,7 +1,11 @@
 package structures.List;
 
 import structures.Utils;
-import java.util.*;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Random;
 
 public class DoubleLinkedList <T> implements IList<T> {
 
@@ -90,8 +94,7 @@ public class DoubleLinkedList <T> implements IList<T> {
     @Override
     public boolean remove(T element) {
 
-        if (sizeList == 0)
-            return false;
+        if (sizeList == 0) {return false;}
         if (sizeList == 1) {
             if (Objects.equals(firstSegment.element, element)) {
                 firstSegment = null;
