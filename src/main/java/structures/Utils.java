@@ -20,7 +20,7 @@ public class Utils {
         for (T element: list) {
             if (Utils.compare(tmp, element, max))
                 tmp = element;
-        };
+        }
         return tmp;
     }
 }
