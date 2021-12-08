@@ -36,5 +36,4 @@ public class Stack <T> {
 
         return lastSegment.element;
     }
-
 }
