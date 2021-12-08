@@ -1,4 +1,6 @@
-.idea/
 target/
+.idea/
+.idea
 *.iml
 *.class
+*.info
