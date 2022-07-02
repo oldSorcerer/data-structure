@@ -10,9 +10,9 @@ public class Stack <T> {
     }
 
     public void push(T elementToAdd){
-        if (elementToAdd == null)
+        if (elementToAdd == null) {
             throw new IllegalArgumentException("New element cannot be null");
-
+        }
         Segment<T> newSegment = new Segment<>();
         newSegment.element = elementToAdd;
         newSegment.nextSegment = lastSegment;
@@ -31,9 +31,9 @@ public class Stack <T> {
     }
 
     public T peek(){
-        if (sizeStack == 0)
+        if (sizeStack == 0) {
             return null;
-
+        }
         return lastSegment.element;
     }
 }

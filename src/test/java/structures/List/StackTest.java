@@ -48,7 +48,7 @@ class StackTest {
             fail("No exception");
         }
         catch (IllegalArgumentException e){
-           // assertEquals("New element cannot be null", e.getMessage());
+            assertEquals("New element cannot be null", e.getMessage());
        }
 
 
