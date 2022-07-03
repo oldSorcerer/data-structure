@@ -1,5 +1,6 @@
 package structures.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -7,9 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StackTest {
 
+    private Stack<String> stringStack;
+
+    @BeforeEach
+    public void init() {
+        stringStack = new Stack<>();
+    }
+
     @Test
     void push() {
-        Stack<String> stringStack = new Stack<>();
         stringStack.push("Привет");
         stringStack.push("меня");
         stringStack.push("зовут");
@@ -22,14 +29,12 @@ class StackTest {
 
     @Test
     void pop() {
-        Stack <String> stringStack = new Stack<>();
         assertNull(stringStack.pop());
         assertEquals(0, stringStack.getSizeStack());
     }
 
     @Test
     void peek() {
-        Stack <String> stringStack = new Stack<>();
         stringStack.push("Привет");
         stringStack.push("меня");
         stringStack.push("зовут");
@@ -41,16 +46,18 @@ class StackTest {
     }
 
     @Test
-    void pushNull(){
+    void pushNullException(){
+        assertThrows(IllegalArgumentException.class, () -> stringStack.push(null));
+    }
+
+    @Test
+    void pushNullMessage() {
         try {
-            Stack<String> stringStack = new Stack<>();
             stringStack.push(null);
             fail("No exception");
         }
         catch (IllegalArgumentException e){
             assertEquals("New element cannot be null", e.getMessage());
        }
-
-
     }
 }
