@@ -9,11 +9,11 @@ class QueueTest {
     private Queue<String> stringQueue;
 
     @BeforeEach
-    public void init() {
+    void init() {
         stringQueue = new Queue<>();
     }
 
-    public void fillQueue() {
+    void fillQueue() {
         stringQueue.put("Привет");
         stringQueue.put("меня");
         stringQueue.put("зовут");
@@ -54,17 +54,16 @@ class QueueTest {
     }
 
     @Test
-    void pushNullException(){
+    void putNullException() {
         assertThrows(IllegalArgumentException.class, () -> stringQueue.put(null));
     }
 
     @Test
-    void putNullMessage(){
+    void putNullMessage() {
         try {
             stringQueue.put(null);
             fail("No exception");
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             assertEquals("New element cannot be null", e.getMessage());
         }
     }
