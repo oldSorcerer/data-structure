@@ -15,12 +15,16 @@ class StackTest {
         stringStack = new Stack<>();
     }
 
-    @Test
-    void push() {
+    public void fillStack() {
         stringStack.push("Привет");
         stringStack.push("меня");
         stringStack.push("зовут");
         stringStack.push("Собака");
+    }
+
+    @Test
+    void push() {
+        fillStack();
         assertEquals(4, stringStack.getSizeStack());
         assertEquals("Собака", stringStack.pop());
         assertEquals("зовут", stringStack.pop());
@@ -35,10 +39,7 @@ class StackTest {
 
     @Test
     void peek() {
-        stringStack.push("Привет");
-        stringStack.push("меня");
-        stringStack.push("зовут");
-        stringStack.push("Собака");
+        fillStack();
         assertEquals(4, stringStack.getSizeStack());
         assertEquals("Собака", stringStack.peek());
         assertEquals("Собака", stringStack.peek());
