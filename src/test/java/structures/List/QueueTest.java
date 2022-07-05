@@ -21,37 +21,37 @@ class QueueTest {
     }
 
     @Test
-    void put() {
+    void poll() {
         fillQueue();
-        assertEquals(4, stringQueue.getSizeQueue());
-        assertEquals("Привет", stringQueue.get());
-        assertEquals("меня", stringQueue.get());
-        assertEquals(2, stringQueue.getSizeQueue());
+        assertEquals(4, stringQueue.size());
+        assertEquals("Привет", stringQueue.poll());
+        assertEquals("меня", stringQueue.poll());
+        assertEquals(2, stringQueue.size());
     }
 
     @Test
     void get() {
-        assertNull(stringQueue.get());
-        assertEquals(0, stringQueue.getSizeQueue());
+        assertNull(stringQueue.poll());
+        assertEquals(0, stringQueue.size());
     }
 
     @Test
-    void firstElement() {
+    void peek() {
         fillQueue();
-        assertEquals(4, stringQueue.getSizeQueue());
-        assertEquals("Привет", stringQueue.firstElement());
-        assertEquals("Привет", stringQueue.firstElement());
-        assertEquals(4, stringQueue.getSizeQueue());
+        assertEquals(4, stringQueue.size());
+        assertEquals("Привет", stringQueue.peek());
+        assertEquals("Привет", stringQueue.peek());
+        assertEquals(4, stringQueue.size());
     }
 
-    @Test
-    void lastElement() {
-        fillQueue();
-        assertEquals(4, stringQueue.getSizeQueue());
-        assertEquals("Собака", stringQueue.lastElement());
-        assertEquals("Собака", stringQueue.lastElement());
-        assertEquals(4, stringQueue.getSizeQueue());
-    }
+//    @Test
+//    void lastElement() {
+//        fillQueue();
+//        assertEquals(4, stringQueue.size());
+//        assertEquals("Собака", stringQueue.lastElement());
+//        assertEquals("Собака", stringQueue.lastElement());
+//        assertEquals(4, stringQueue.size());
+//    }
 
     @Test
     void putNullException() {

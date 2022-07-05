@@ -24,25 +24,25 @@ class StackTest {
     @Test
     void push() {
         fillStack();
-        assertEquals(4, stringStack.getSizeStack());
+        assertEquals(4, stringStack.size());
         assertEquals("Собака", stringStack.pop());
         assertEquals("зовут", stringStack.pop());
-        assertEquals(2, stringStack.getSizeStack());
+        assertEquals(2, stringStack.size());
     }
 
     @Test
     void pop() {
         assertNull(stringStack.pop());
-        assertEquals(0, stringStack.getSizeStack());
+        assertEquals(0, stringStack.size());
     }
 
     @Test
     void peek() {
         fillStack();
-        assertEquals(4, stringStack.getSizeStack());
+        assertEquals(4, stringStack.size());
         assertEquals("Собака", stringStack.peek());
         assertEquals("Собака", stringStack.peek());
-        assertEquals(4, stringStack.getSizeStack());
+        assertEquals(4, stringStack.size());
     }
 
     @Test

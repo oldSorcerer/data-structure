@@ -13,7 +13,7 @@ class DoubleLinkedListTest {
         list.add("меня");
         list.add("зовут");
         list.add("Собака");
-        assertEquals(4, list.getSizeList());
+        assertEquals(4, list.size());
         assertEquals("Привет", list.get(0));
         assertEquals("меня", list.get(1));
         assertEquals("зовут", list.get(2));
@@ -25,8 +25,8 @@ class DoubleLinkedListTest {
         list.add("меня");
         list.add("зовут");
         list.add("Собака");
-        list.add("Привет", 0);
-        assertEquals(4, list.getSizeList());
+        list.add(0, "Привет");
+        assertEquals(4, list.size());
         assertEquals("Привет", list.get(0));
         assertEquals("меня", list.get(1));
         assertEquals("зовут", list.get(2));
@@ -39,8 +39,8 @@ class DoubleLinkedListTest {
         list.add("меня");
         list.add("зовут");
         list.add("Собака");
-        list.add(",",1);
-        assertEquals(5, list.getSizeList());
+        list.add(1, ",");
+        assertEquals(5, list.size());
         assertEquals("Привет", list.get(0));
         assertEquals(",", list.get(1));
         assertEquals("меня", list.get(2));
@@ -55,8 +55,8 @@ class DoubleLinkedListTest {
         list.add("меня");
         list.add("зовут");
         list.add("Собака");
-        list.add(",",3);
-        assertEquals(5, list.getSizeList());
+        list.add(3,",");
+        assertEquals(5, list.size());
         assertEquals("Привет", list.get(0));
         assertEquals("меня", list.get(1));
         assertEquals("зовут", list.get(2));
@@ -84,8 +84,7 @@ class DoubleLinkedListTest {
             list.remove(10);
             fail("No error");
         }
-        catch (IllegalArgumentException e) {
-
+        catch (IllegalArgumentException ignore) {
         }
     }
     @Test
@@ -93,7 +92,7 @@ class DoubleLinkedListTest {
         DoubleLinkedList<String> list = new DoubleLinkedList<>();
         list.add("Привет");
         list.remove(0);
-        assertEquals(0, list.getSizeList());
+        assertEquals(0, list.size());
         list.add("Привет");
         list.add("меня");
         list.add("зовут");
@@ -106,7 +105,7 @@ class DoubleLinkedListTest {
         assertEquals("меня", list.get(1));
         assertEquals("зовут", list.get(2));
         assertEquals("Собака", list.get(3));
-        assertEquals(4, list.getSizeList());
+        assertEquals(4, list.size());
     }
     @Test
     void removeFirstOf2 (){
@@ -114,9 +113,9 @@ class DoubleLinkedListTest {
         list.add("Привет");
         list.add("меня");
         list.remove(0);
-        assertEquals(1, list.getSizeList());
+        assertEquals(1, list.size());
         assertEquals("меня", list.get(0));
-        list.add("Привет", 0);
+        list.add(0, "Привет");
         list.add("зовут");
         list.add("Собака");
         check(list);
@@ -127,7 +126,7 @@ class DoubleLinkedListTest {
         list.add("Привет");
         list.add("меня");
         list.remove(1);
-        assertEquals(1, list.getSizeList());
+        assertEquals(1, list.size());
         assertEquals("Привет", list.get(0));
         list.add("меня");
         list.add("зовут");
@@ -142,11 +141,11 @@ class DoubleLinkedListTest {
         list.add("зовут");
         list.add("Собака");
         list.remove(0);
-        assertEquals(3,list.getSizeList());
+        assertEquals(3,list.size());
         assertEquals("меня",list.get(0));
         assertEquals("зовут",list.get(1));
         assertEquals("Собака",list.get(2));
-        list.add("Привет",0);
+        list.add(0, "Привет");
         check(list);
 
     }
@@ -158,7 +157,7 @@ class DoubleLinkedListTest {
         list.add("зовут");
         list.add("Собака");
         list.remove(3);
-        assertEquals(3,list.getSizeList());
+        assertEquals(3,list.size());
         assertEquals("Привет", list.get(0));
         assertEquals("меня",list.get(1));
         assertEquals("зовут",list.get(2));
@@ -184,7 +183,7 @@ class DoubleLinkedListTest {
         DoubleLinkedList<String> list = new DoubleLinkedList<>();
         list.add("Привет");
         assertTrue(list.remove("Привет"));
-        assertEquals(0,list.getSizeList());
+        assertEquals(0,list.size());
         list.add("Привет");
         list.add("меня");
         list.add("зовут");
@@ -198,9 +197,9 @@ class DoubleLinkedListTest {
         list.add("Привет");
         list.add("меня");
         assertTrue(list.remove("Привет"));
-        assertEquals(1, list.getSizeList());
+        assertEquals(1, list.size());
         assertEquals("меня", list.get(0));
-        list.add("Привет", 0);
+        list.add(0, "Привет");
         list.add("зовут");
         list.add("Собака");
         check(list);
@@ -211,7 +210,7 @@ class DoubleLinkedListTest {
         list.add("Привет");
         list.add("меня");
         assertTrue(list.remove("меня"));
-        assertEquals(1, list.getSizeList());
+        assertEquals(1, list.size());
         assertEquals("Привет", list.get(0));
         list.add("меня");
         list.add("зовут");
@@ -226,13 +225,12 @@ class DoubleLinkedListTest {
         list.add("зовут");
         list.add("Собака");
         assertTrue(list.remove("Привет"));
-        assertEquals(3,list.getSizeList());
+        assertEquals(3,list.size());
         assertEquals("меня",list.get(0));
         assertEquals("зовут",list.get(1));
         assertEquals("Собака",list.get(2));
-        list.add("Привет",0);
+        list.add(0, "Привет");
         check(list);
-
     }
     @Test
     void removeLastOfManyElements() {
@@ -242,7 +240,7 @@ class DoubleLinkedListTest {
         list.add("зовут");
         list.add("Собака");
         assertTrue(list.remove("Собака"));
-        assertEquals(3,list.getSizeList());
+        assertEquals(3,list.size());
         assertEquals("Привет", list.get(0));
         assertEquals("меня",list.get(1));
         assertEquals("зовут",list.get(2));
@@ -278,7 +276,7 @@ class DoubleLinkedListTest {
         list.add("зовут");
         list.add("Собака");
         list.clear();
-        assertEquals(0, list.getSizeList());
+        assertEquals(0, list.size());
     }
 
     @Test
@@ -295,7 +293,7 @@ class DoubleLinkedListTest {
         list.sort(false);
 
         System.out.println(list.get(0));
-        for (int i = 1; i < list.getSizeList(); i++) {
+        for (int i = 1; i < list.size(); i++) {
             assertTrue(list.get(i - 1) <= list.get(i));
             System.out.println(list.get(i));
         }
@@ -316,7 +314,7 @@ class DoubleLinkedListTest {
         list.sort(true);
 
         System.out.println(list.get(0));
-        for (int i = 1; i < list.getSizeList(); i++) {
+        for (int i = 1; i < list.size(); i++) {
             assertTrue(list.get(i - 1) >= list.get(i));
             System.out.println(list.get(i));
         }
@@ -328,22 +326,22 @@ class DoubleLinkedListTest {
         list.quickSort = true;
         list.sort(true);
 
-        for (int i = 1; i < list.getSizeList(); i++)
+        for (int i = 1; i < list.size(); i++) {
             assertTrue(list.get(i - 1) >= list.get(i));
-
+        }
         list.add(5);
         list.sort(true);
 
-        for (int i = 1; i < list.getSizeList(); i++)
+        for (int i = 1; i < list.size(); i++) {
             assertTrue(list.get(i - 1) >= list.get(i));
-
+        }
 
         list.add(4);
         list.sort(true);
 
-        for (int i = 1; i < list.getSizeList(); i++)
+        for (int i = 1; i < list.size(); i++) {
             assertTrue(list.get(i - 1) >= list.get(i));
-
+        }
     }
 
     @Test
@@ -363,7 +361,7 @@ class DoubleLinkedListTest {
         for (Integer i : list)
             assertEquals(list.get(idx++), i);
 
-        assertEquals(list.getSizeList(), idx);
+        assertEquals(list.size(), idx);
     }
 
     @Test
@@ -385,7 +383,7 @@ class DoubleLinkedListTest {
     void minEmpty() {
         DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
 
-        assertEquals(null, list.min());
+        assertNull(list.min());
     }
 
     @Test

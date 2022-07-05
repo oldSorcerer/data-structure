@@ -1,5 +1,6 @@
 package structures.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import structures.Tree.SimpleTree;
 
@@ -9,9 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleTreeTest {
 
+    private SimpleTree<Integer> tree;
+
+    @BeforeEach
+    void init() {
+        tree = new SimpleTree<>();
+    }
+
     @Test
     void add() {
-        SimpleTree<Integer> tree = new SimpleTree<>();
         assertTrue(tree.add(5));
         assertTrue(tree.add(91));
         assertTrue(tree.add(1));
@@ -25,7 +32,6 @@ class SimpleTreeTest {
 
     @Test
     void iterator() {
-        SimpleTree<Integer> tree = new SimpleTree<>();
         tree.add(4);
         tree.add(2);
         tree.add(6);
@@ -59,7 +65,6 @@ class SimpleTreeTest {
 
     @Test
     void contains() {
-        SimpleTree<Integer> tree = new SimpleTree<>();
         tree.add(5);
         tree.add(91);
         tree.add(1);
@@ -70,7 +75,6 @@ class SimpleTreeTest {
 
     @Test
     void remove() {
-        SimpleTree<Integer> tree = new SimpleTree<>();
         tree.add(4);
         tree.add(2);
         tree.add(6);
@@ -88,6 +92,5 @@ class SimpleTreeTest {
             assertTrue(previuos < element);
             previuos = element;
         }
-
     }
 }

@@ -17,7 +17,7 @@ class PriorityQueueTest {
         queue.put(31);
         queue.put(60);
 
-        assertEquals(9, queue.firstElement());
+        assertEquals(9, queue.peek());
     }
 
     @Test
@@ -31,12 +31,12 @@ class PriorityQueueTest {
         queue.put(31);
         queue.put(60);
 
-        assertEquals(9, queue.get());
-        assertEquals(12, queue.get());
-        assertEquals(20, queue.get());
-        assertEquals(31, queue.get());
-        assertEquals(59, queue.get());
-        assertEquals(60, queue.get());
-        assertEquals(85, queue.get());
+        assertEquals(9, queue.poll());
+        assertEquals(12, queue.poll());
+        assertEquals(20, queue.poll());
+        assertEquals(31, queue.poll());
+        assertEquals(59, queue.poll());
+        assertEquals(60, queue.poll());
+        assertEquals(85, queue.poll());
     }
 }

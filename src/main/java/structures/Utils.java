@@ -17,13 +17,14 @@ public class Utils {
     //      что тогда твой екстремум будет возвращать?
     public static <T> T extremum (IList<T> list, boolean max) {
 
-        if (list.getSizeList() == 0)
+        if (list.size() == 0) {
             return null;
-
+        }
         T tmp = list.get(0);
         for (T element: list) {
-            if (Utils.compare(tmp, element, max))
+            if (Utils.compare(tmp, element, max)) {
                 tmp = element;
+            }
         }
         return tmp;
     }

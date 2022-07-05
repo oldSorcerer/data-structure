@@ -4,13 +4,13 @@ import structures.Utils;
 
 public interface IList <T> extends Iterable<T> {
 
-    int getSizeList();
-    void add(T elementToAdd);
-    void add(T elementToAdd, int index);
+    int size();
+    void add(T element);
+    void add(int index, T element);
     void remove(int index);
     boolean remove(T element);
     T get(int index);
-    T set(T change, int index);
+    T set(int index, T change);
     int indexOf(T element);
     void clear();
     void sort(boolean back);

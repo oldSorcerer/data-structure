@@ -1,12 +1,15 @@
 package structures.List;
 
-public class Stack <T> {
+import structures.AbstractCollection;
+
+public class Stack <T> extends AbstractCollection<T> {
 
     private Segment<T> lastSegment;
-    private int sizeStack;
+    private int size;
 
-    public int getSizeStack() {
-        return sizeStack;
+    @Override
+    public int size() {
+        return size;
     }
 
     public void push(T elementToAdd){
@@ -17,21 +20,21 @@ public class Stack <T> {
         newSegment.element = elementToAdd;
         newSegment.nextSegment = lastSegment;
         lastSegment = newSegment;
-        sizeStack++;
+        size++;
     }
 
     public T pop(){
-        if (sizeStack == 0)
+        if (size == 0)
             return null;
 
         T retElement = lastSegment.element;
         lastSegment = lastSegment.nextSegment;
-        sizeStack--;
+        size--;
         return retElement;
     }
 
     public T peek(){
-        if (sizeStack == 0) {
+        if (size == 0) {
             return null;
         }
         return lastSegment.element;
