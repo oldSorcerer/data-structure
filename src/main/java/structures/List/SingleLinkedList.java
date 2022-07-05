@@ -1,50 +1,51 @@
 package structures.List;
 
+import structures.AbstractCollection;
 import structures.Utils;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SingleLinkedList <T> implements IList<T> {
+public class SingleLinkedList <T> extends AbstractCollection<T> implements IList<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;
-    private int sizeList;
+    private int size;
 
     @Override
-    public int getSizeList() {
-        return sizeList;
+    public int size() {
+        return size;
     }
 
     @Override
-    public void add(T elementToAdd) {
-        add(elementToAdd, sizeList);
+    public void add(T element) {
+        add(size, element);
     }
 
     @Override
-    public void add(T elementToAdd, int index) {
-        if (index < 0 || index > sizeList)
+    public void add(int index, T element) {
+        if (index < 0 || index > size)
             throw new IllegalArgumentException("Not correct index");
 
         Segment <T> newSegment = new Segment<>();
-        newSegment.element = elementToAdd;
+        newSegment.element = element;
 
-        if (index == sizeList) {
-          if (sizeList == 0)
+        if (index == size) {
+          if (size == 0)
                 firstSegment = newSegment;
             else
                 lastSegment.nextSegment = newSegment;
 
             lastSegment = newSegment;
-            sizeList++;
+            size++;
             return;
         }
 
         if (index == 0){
             newSegment.nextSegment = firstSegment;
             firstSegment = newSegment;
-            sizeList++;
+            size++;
             return;
         }
         Segment<T> previous = firstSegment;
@@ -53,32 +54,32 @@ public class SingleLinkedList <T> implements IList<T> {
         }
         newSegment.nextSegment = previous.nextSegment;
         previous.nextSegment = newSegment;
-        sizeList++;
+        size++;
     }
 
     @Override
     public void remove(int index) {
-        if (index < 0 || index >= sizeList)
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
-        if (sizeList == 1){
+        if (size == 1){
             firstSegment = null;
             lastSegment = null;
-            sizeList--;
+            size--;
             return;
         }
-        if (sizeList == 2){
+        if (size == 2){
             if (index == 0)
                 firstSegment = lastSegment;
             else {
                 lastSegment = firstSegment;
                 firstSegment.nextSegment = null;
             }
-             sizeList--;
+             size--;
             return;
         }
         if (index == 0){
             firstSegment = firstSegment.nextSegment;
-            sizeList--;
+            size--;
           return;
         }
         Segment <T> previous = firstSegment;
@@ -86,22 +87,22 @@ public class SingleLinkedList <T> implements IList<T> {
             previous = previous.nextSegment;
         previous.nextSegment = previous.nextSegment.nextSegment;
 
-        if (index == sizeList-1)
+        if (index == size -1)
             lastSegment = previous;
-        sizeList--;
+        size--;
     }
 
     @Override
     public boolean remove(T element) {
 
-        if (sizeList == 0)
+        if (size == 0)
             return false;
 
-        if (sizeList == 1){
+        if (size == 1){
             return removeWhenOne(element);
         }
 
-        if (sizeList == 2){
+        if (size == 2){
             return removeWhenTwo(element);
         }
         return findAndRemove(element);
@@ -110,7 +111,7 @@ public class SingleLinkedList <T> implements IList<T> {
     private boolean removeWhenOne(T element) {
         if (Objects.equals(firstSegment.element,element)){
             firstSegment = lastSegment = null;
-            sizeList--;
+            size--;
             return true;
         }
         else
@@ -121,17 +122,17 @@ public class SingleLinkedList <T> implements IList<T> {
 
         if (Objects.equals(firstSegment.element, element)){
             firstSegment = firstSegment.nextSegment;
-            sizeList--;
+            size--;
             return true;
         }
 
         Segment<T> previous = firstSegment;
-        for (int i = 1; i <sizeList ; i++) {
+        for (int i = 1; i < size; i++) {
             if (Objects.equals(previous.nextSegment.element, element)){
                 previous.nextSegment = previous.nextSegment.nextSegment;
-                if (i == sizeList - 1)
+                if (i == size - 1)
                     lastSegment = previous;
-                sizeList--;
+                size--;
                 return  true;
             }
             previous = previous.nextSegment;
@@ -142,13 +143,13 @@ public class SingleLinkedList <T> implements IList<T> {
     private boolean removeWhenTwo(T element) {
         if (Objects.equals(firstSegment.element, element)){
             firstSegment = lastSegment;
-            sizeList--;
+            size--;
             return true;
         }
         else if (Objects.equals(lastSegment.element, element)){
             lastSegment = firstSegment;
             firstSegment.nextSegment = null;
-            sizeList--;
+            size--;
             return true;
         }
         else
@@ -157,7 +158,7 @@ public class SingleLinkedList <T> implements IList<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= sizeList)
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
 
         Segment<T> segment = firstSegment;
@@ -168,8 +169,8 @@ public class SingleLinkedList <T> implements IList<T> {
     }
 
     @Override
-    public T set(T change, int index) {
-        if (index < 0 || index >= sizeList)
+    public T set(int index, T change) {
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
 
         Segment<T> segment = firstSegment;
@@ -184,7 +185,7 @@ public class SingleLinkedList <T> implements IList<T> {
     @Override
     public int indexOf(T element) {
         Segment<T> segment = firstSegment;
-        for (int i = 0; i < sizeList; i++) {
+        for (int i = 0; i < size; i++) {
             if (Objects.equals(segment.element, element))
                 return i;
             segment = segment.nextSegment;
@@ -196,14 +197,13 @@ public class SingleLinkedList <T> implements IList<T> {
     public void clear() {
         firstSegment = null;
         lastSegment = null;
-        sizeList = 0;
+        size = 0;
 
     }
 
     @Override
     public void sort(boolean back) {
-
-        for (int i = sizeList ; i > 1 ; i--) {
+        for (int i = size; i > 1 ; i--) {
             Segment<T> segment = firstSegment;
             for (int j = 1; j < i; j++) {
                 if (Utils.compare(segment.element, segment.nextSegment.element, back)) {

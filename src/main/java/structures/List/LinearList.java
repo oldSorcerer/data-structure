@@ -1,13 +1,14 @@
 package structures.List;
 
+import structures.AbstractCollection;
 import structures.Utils;
 
 import java.util.*;
 
-public class LinearList<T> implements IList<T> {
+public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
 
     private Object[] items;
-    private int sizeList;
+    private int size;
     private int start;
 
     public LinearList() {
@@ -21,147 +22,148 @@ public class LinearList<T> implements IList<T> {
     }
 
     @Override
-    public int getSizeList() {
-        return sizeList;
+    public int size() {
+        return size;
     }
 
     @Override
-    public void add(T elementToAdd) {
-        add(elementToAdd, sizeList);
+    public void add(T element) {
+        add(size, element);
     }
 
     @Override
-    public void add(T elementToAdd, int index) {
-        if (index < 0 || index > sizeList)
+    public void add(int index, T element) {
+        if (index < 0 || index > size)
             throw new IllegalArgumentException("Not correct index");
 
-        if (sizeList == 0)
-            items[start] = elementToAdd;
+        if (size == 0)
+            items[start] = element;
 
-        else if (sizeList < items.length) { // Резерв есть!
-            if (index <= sizeList / 2) { // Вставляем в первую половну списка
+        else if (size < items.length) { // Резерв есть!
+            if (index <= size / 2) { // Вставляем в первую половну списка
                 if (start == 0) { // Нет резерва в начале массива
                     // Добавить резерв слева, вставить элемент слева и весь список передвинуть вправо
-                    addLeftShift(elementToAdd,index);
+                    addLeftShift(index, element);
                 }
                 else { // Есть резерв в начале массива
                     // Вставляем элемент влево и все что левее смещаем влево
-                    addLeft(elementToAdd, index);
+                    addLeft(index, element);
                 }
             }
             else { // Вставляем во вторую половину списка
-                if (start + sizeList < items.length) { // Есть резерв в конце массива
+                if (start + size < items.length) { // Есть резерв в конце массива
                     // Вставляем элемент вправо и остаток списка двигаем вправо
-                    addRight(elementToAdd, index);
+                    addRight(index, element);
                 }
                 else { // Нет резерва в конце массива
                     // Вставляем элемент слева, всё что левее его смещаем влево
-                    addRightShift(elementToAdd, index);
+                    addRightShift(index, element);
                 }
             }
         }
-        else // Резерва нет!! пересоздаение массива!
-            recreateItems(elementToAdd, index);
-
-        sizeList++;
+        else { // Резерва нет!! пересоздаение массива!
+            recreateItems(index, element);
+        }
+        size++;
     }
 
-    private void addLeftShift (T elementToAdd, int index) {
-        start = (items.length - sizeList) / 2;
+    private void addLeftShift (int index, T element) {
+        start = (items.length - size) / 2;
 
-        for (int i = sizeList - 1; i >= index ; i--)
+        for (int i = size - 1; i >= index ; i--) {
             items[start + i + 1] = items[i];
-
-        items[start + index] = elementToAdd;
+        }
+        items[start + index] = element;
 
         for (int i = index; i >= 0 ; i--)
             items[start + i] = items[i];
         Arrays.fill(items, 0, start, null);
     }
 
-    private void addLeft (T elementToAdd, int index) {
+    private void addLeft (int index, T element) {
         for (int i = 0; i < index ; i++)
             items[start + i - 1] = items[start + i];
         start--;
-        items[start + index] = elementToAdd;
+        items[start + index] = element;
     }
 
-    private void addRight (T elementToAdd, int index) {
-        for (int i = sizeList; i > index ; i--)
+    private void addRight (int index, T element) {
+        for (int i = size; i > index ; i--)
             items[start + i] = items[start + i - 1];
-        items[start + index] = elementToAdd;
+        items[start + index] = element;
     }
 
-    private void addRightShift (T elementToAdd, int index) {
+    private void addRightShift (int index, T element) {
         int newStart = start / 2;
         for (int i = 0; i < index ; i++)
             items[newStart + i] = items[start + i];
-        items[newStart + index] = elementToAdd;
+        items[newStart + index] = element;
 
         if (newStart != start - 1) {
-            for (int i = index; i < sizeList; i++)
+            for (int i = index; i < size; i++)
                 items[newStart + i + 1] = items[start + i];
         }
         start = newStart;
-        Arrays.fill(items, start + sizeList, items.length, null);
+        Arrays.fill(items, start + size, items.length, null);
     }
 
-    private void recreateItems(T elementToAdd, int index) {
+    private void recreateItems(int index, T element) {
         int newStart = start;
 
-        if (newStart == 0 && index <= sizeList / 2)
-            newStart = (items.length * 2 - sizeList) / 2;
-
+        if (newStart == 0 && index <= size / 2) {
+            newStart = (items.length * 2 - size) / 2;
+        }
         Object[] newItems = new Object[items.length * 2];
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++) {
             newItems[newStart + i] = items[start + i];
+        }// if (index >= 0) System.arraycopy(items, start + 0, newItems, newStart + 0, index);
 
-        newItems[newStart + index] = elementToAdd;
+        newItems[newStart + index] = element;
 
-        for (int i = index; i < sizeList ; i++)
+        for (int i = index ; i < size; i++) {
             newItems[newStart + i + 1] = items[start + i];
-
+        }
         items = newItems;
         start = newStart;
     }
 
     @Override
     public void remove(int index) {
-        if (index < 0 || index >= sizeList)
+        if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
 
-        if (items.length > sizeList * 4) {
+        if (items.length > size * 4) {
             recreateItems(index);
         }
         else {
-            if (index <= sizeList / 2) {
+            if (index <= size / 2) {
                 for (int i = index; i > 0 ; i--)
                     items[start + i] = items[start + i - 1];
                 items[start] = null;
                 start++;
             }
             else {
-                for (int i = index; i < sizeList - 1 ; i++)
+                for (int i = index; i < size - 1 ; i++)
                     items[start + i] = items[start + i + 1];
-                items[sizeList] = null;
+                items[size] = null;
             }
         }
-        sizeList--;
+        size--;
     }
 
     private void recreateItems(int index) {
         int newStart = start;
 
-        if (newStart == 0)
-            newStart = (items.length / 2 - sizeList) / 2;
-
+        if (newStart == 0) {
+            newStart = (items.length / 2 - size) / 2;
+        }
         Object[] newItems = new Object[items.length / 2];
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++) {
             newItems[newStart + i] = items[start + i];
-
-        for (int i = index; i < sizeList - 1; i++)
+        }
+        for (int i = index; i < size - 1; i++) {
             newItems[newStart + i] = items[start + i + 1];
-
+        }
         items = newItems;
         start = newStart;
     }
@@ -178,17 +180,17 @@ public class LinearList<T> implements IList<T> {
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= sizeList)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
-
+        }
         return (T) items[start + index];
     }
 
     @Override
-    public T set(T change, int index) {
-        if (index < 0 || index >= sizeList)
+    public T set(int index, T change) {
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
-
+        }
         T retElement = (T) items[start + index];
         items[start + index] = change;
         return retElement;
@@ -196,9 +198,10 @@ public class LinearList<T> implements IList<T> {
 
     @Override
     public int indexOf(T element) {
-        for (int i = 0; i < sizeList ; i++) {
-            if (Objects.equals(items[start + i], element))
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(items[start + i], element)) {
                 return i;
+            }
         }
         return -1;
     }
@@ -206,37 +209,38 @@ public class LinearList<T> implements IList<T> {
     @Override
     public void clear() {
         Arrays.fill(items, null);
-        sizeList = 0;
+        size = 0;
     }
 
     @Override
     public void sort(boolean back) {
-        sort(start, sizeList, back);
+        sort(start, size, back);
     }
 
     private void sort(int begin, int size, boolean back) {
-        if (size <= 1)
+        if (size <= 1) {
             return;
+        }
 
         Random r = new Random();
-        int idx = r.nextInt(size);
+        int index = r.nextInt(size);
 
-        Object tmp = items[begin + idx];
-        items[begin + idx] = items[begin];
+        Object tmp = items[begin + index];
+        items[begin + index] = items[begin];
         items[begin] = tmp;
-        idx = 0;
+        index = 0;
 
         for (int i = 1; i < size ; i++) {
-            if (Utils.compare((T)items[begin + idx], (T)items[begin + i], back)) {
-                items[begin + idx] = items[begin + i];
-                items[begin + i] = items[begin + idx + 1];
-                items[begin + idx + 1] = tmp;
-                idx++;
+            if (Utils.compare((T)items[begin + index], (T)items[begin + i], back)) {
+                items[begin + index] = items[begin + i];
+                items[begin + i] = items[begin + index + 1];
+                items[begin + index + 1] = tmp;
+                index++;
             }
         }
 
-        sort(begin, idx, back);
-        sort(begin + idx + 1, size - idx - 1, back);
+        sort(begin, index, back);
+        sort(begin + index + 1, size - index - 1, back);
     }
 
     @Override
@@ -247,12 +251,12 @@ public class LinearList<T> implements IList<T> {
 
             @Override
             public boolean hasNext() {
-                return index < sizeList;
+                return index < size;
             }
 
             @Override
             public T next() {
-                if (index >= sizeList)
+                if (index >= size)
                     throw new NoSuchElementException();
                 return (T) items[start + index++];
             }

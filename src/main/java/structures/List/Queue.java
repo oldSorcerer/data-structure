@@ -1,56 +1,59 @@
 package structures.List;
 
-public class Queue <T> implements IQueue<T> {
+import structures.AbstractCollection;
+
+public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;
-    private int sizeQueue;
+    private int size;
 
     @Override
-    public int getSizeQueue() {
-        return sizeQueue;
+    public int size() {
+        return size;
     }
 
     @Override
     public void put(T elementToAdd){
+
         if (elementToAdd == null) {
             throw new IllegalArgumentException("New element cannot be null");
         }
         Segment<T> newSegment = new Segment<>();
         newSegment.element = elementToAdd;
-        if (sizeQueue == 0) {
+        if (size == 0) {
             firstSegment = newSegment;
         }
         else {
             lastSegment.nextSegment = newSegment;
         }
         lastSegment = newSegment;
-        sizeQueue++;
+        size++;
     }
 
     @Override
-    public T firstElement(){
-        if (sizeQueue == 0) {
+    public T peek(){
+        if (size == 0) {
             return null;
         }
         return firstSegment.element;
     }
 
-    public T lastElement(){
-        if (sizeQueue == 0) {
-            return null;
-        }
-        return lastSegment.element;
-    }
-
     @Override
-    public T get(){
-        if (sizeQueue == 0) {
+    public T poll(){
+        if (size == 0) {
             return null;
         }
         T retElement = firstSegment.element;
         firstSegment = firstSegment.nextSegment;
-        sizeQueue--;
+        size--;
         return retElement;
     }
+
+//    public T lastElement(){
+//        if (size == 0) {
+//            return null;
+//        }
+//        return lastSegment.element;
+//    }
 }

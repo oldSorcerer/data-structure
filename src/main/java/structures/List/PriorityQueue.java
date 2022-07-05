@@ -1,11 +1,12 @@
 package structures.List;
 
+import structures.AbstractCollection;
 import structures.Utils;
 
-public class PriorityQueue <T extends Comparable <T>> implements IQueue<T> {
+public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection<T> implements IQueue<T> {
 
-    private boolean min;
-    private LinearList<T> list = new LinearList<>();
+    private final boolean min;
+    private final LinearList<T> list = new LinearList<>();
 
     public PriorityQueue(boolean min) {
         this.min = min;
@@ -13,14 +14,14 @@ public class PriorityQueue <T extends Comparable <T>> implements IQueue<T> {
 
     private int leftChild(int number){
         number = 2 * number + 1;
-        if (number >= list.getSizeList())
+        if (number >= list.size())
             return -1;
         return number;
     }
 
     private int rightChild(int number) {
         number = 2 * number + 2;
-        if (number >= list.getSizeList())
+        if (number >= list.size())
             return -1;
         return number;
     }
@@ -32,52 +33,51 @@ public class PriorityQueue <T extends Comparable <T>> implements IQueue<T> {
     }
 
     @Override
-    public int getSizeQueue() {
-        return list.getSizeList();
+    public int size() {
+        return list.size();
     }
 
     @Override
-    public void put(T elementToAdd) {
-        list.add(elementToAdd);
-        int idx = list.getSizeList() - 1;
+    public void put(T element) {
+        list.add(element);
+        int index = list.size() - 1;
 
-        while (parent(idx) >= 0 && Utils.compare(list.get(idx), list.get(parent(idx)), min)) {
-            list.set(list.get(parent(idx)), idx);
-            list.set(elementToAdd, parent(idx));
-            idx = parent(idx);
+        while (parent(index) >= 0 && Utils.compare(list.get(index), list.get(parent(index)), min)) {
+            list.set(index, list.get(parent(index)));
+            list.set(parent(index), element);
+            index = parent(index);
         }
     }
 
     @Override
-    public T firstElement() {
+    public T peek() {
         return list.get(0);
     }
 
     @Override
-    public T get() {
+    public T poll() {
         T element = list.get(0);
-        list.set(list.get(list.getSizeList() - 1), 0);
-        list.remove(list.getSizeList() - 1);
-        int idx = 0;
+        list.set(0, list.get(list.size() - 1));
+        list.remove(list.size() - 1);
+        int index = 0;
 
-        while ( (leftChild(idx) >= 0 && Utils.compare(list.get(leftChild(idx)), list.get(idx), min) )  ||
-                (rightChild(idx) >= 0 && Utils.compare(list.get(rightChild(idx)), list.get(idx), min) )   ) {
+        while ( (leftChild(index) >= 0 && Utils.compare(list.get(leftChild(index)), list.get(index), min) )  ||
+                (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(index), min) )   ) {
             // Меняем на правого ребёнка, когда есть правый ребёнок, который приоритетнее, чем левый
             // иначе меняем на левого
-            if (rightChild(idx) >= 0 && Utils.compare( list.get(rightChild(idx)), list.get(leftChild(idx)), min)) {
-                T tmp = list.get(idx);
-                list.set(list.get(rightChild(idx)), idx);
-                list.set(tmp, rightChild(idx));
-                idx = rightChild(idx);
+            if (rightChild(index) >= 0 && Utils.compare( list.get(rightChild(index)), list.get(leftChild(index)), min)) {
+                T tmp = list.get(index);
+                list.set(index, list.get(rightChild(index)));
+                list.set(rightChild(index), tmp);
+                index = rightChild(index);
             }
             else {
-                T tmp = list.get(idx);
-                list.set(list.get(leftChild(idx)), idx);
-                list.set(tmp, leftChild(idx));
-                idx = leftChild(idx);
+                T tmp = list.get(index);
+                list.set(index, list.get(leftChild(index)));
+                list.set(leftChild(index), tmp);
+                index = leftChild(index);
             }
         }
-
         return element;
     }
 }
