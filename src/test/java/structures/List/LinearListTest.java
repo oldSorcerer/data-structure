@@ -16,7 +16,7 @@ class LinearListTest {
         stringsList = new LinearList<>();
     }
 
-    void fillList4Strings() {
+    void fillListFourStrings() {
         stringsList.add("Привет");
         stringsList.add("меня");
         stringsList.add("зовут");
@@ -50,7 +50,7 @@ class LinearListTest {
 
     @Test
     void add() {
-        fillList4Strings();
+        fillListFourStrings();
         assertEquals(4, stringsList.size());
         assertEquals("Привет", stringsList.get(0));
         assertEquals("меня", stringsList.get(1));
@@ -61,7 +61,7 @@ class LinearListTest {
     @Test
     void addWithCapacity() {
         stringsList = new LinearList<>(2);
-        fillList4Strings();
+        fillListFourStrings();
         assertEquals(4, stringsList.size());
         assertEquals("Привет", stringsList.get(0));
         assertEquals("меня", stringsList.get(1));
