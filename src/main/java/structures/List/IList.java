@@ -10,7 +10,7 @@ public interface IList <T> extends Iterable<T> {
     void remove(int index);
     boolean remove(T element);
     T get(int index);
-    T set(int index, T change);
+    void set(int index, T change);
     int indexOf(T element);
     void clear();
     void sort(boolean back);
