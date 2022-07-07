@@ -16,8 +16,9 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     }
 
     public LinearList(int capacity) {
-        if (capacity < 1)
+        if (capacity < 1) {
             throw new IllegalArgumentException("Capacity must be greater than zero");
+        }
         items = new Object[capacity];
     }
 
@@ -36,26 +37,22 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Not correct index");
 
-        if (size == 0)
+        if (size == 0) {
             items[start] = element;
-
-        else if (size < items.length) { // Резерв есть!
+        } else if (size < items.length) { // Резерв есть!
             if (index <= size / 2) { // Вставляем в первую половну списка
                 if (start == 0) { // Нет резерва в начале массива
                     // Добавить резерв слева, вставить элемент слева и весь список передвинуть вправо
                     addLeftShift(index, element);
-                }
-                else { // Есть резерв в начале массива
+                } else { // Есть резерв в начале массива
                     // Вставляем элемент влево и все что левее смещаем влево
                     addLeft(index, element);
                 }
-            }
-            else { // Вставляем во вторую половину списка
+            } else { // Вставляем во вторую половину списка
                 if (start + size < items.length) { // Есть резерв в конце массива
                     // Вставляем элемент вправо и остаток списка двигаем вправо
                     addRight(index, element);
-                }
-                else { // Нет резерва в конце массива
+                } else { // Нет резерва в конце массива
                     // Вставляем элемент слева, всё что левее его смещаем влево
                     addRightShift(index, element);
                 }
@@ -70,13 +67,14 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     private void addLeftShift (int index, T element) {
         start = (items.length - size) / 2;
 
-        for (int i = size - 1; i >= index ; i--) {
+        for (int i = size - 1; i >= index; i--) {
             items[start + i + 1] = items[i];
         }
         items[start + index] = element;
 
-        for (int i = index; i >= 0 ; i--)
+        for (int i = index; i >= 0 ; i--) {
             items[start + i] = items[i];
+        }
         Arrays.fill(items, 0, start, null);
     }
 
@@ -95,13 +93,15 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
 
     private void addRightShift (int index, T element) {
         int newStart = start / 2;
-        for (int i = 0; i < index ; i++)
+        for (int i = 0; i < index ; i++) {
             items[newStart + i] = items[start + i];
+        }
         items[newStart + index] = element;
 
         if (newStart != start - 1) {
-            for (int i = index; i < size; i++)
+            for (int i = index; i < size; i++) {
                 items[newStart + i + 1] = items[start + i];
+            }
         }
         start = newStart;
         Arrays.fill(items, start + size, items.length, null);
@@ -187,13 +187,12 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     }
 
     @Override
-    public T set(int index, T change) {
+    public void set(int index, T element) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
         }
-        T retElement = (T) items[start + index];
-        items[start + index] = change;
-        return retElement;
+        items[start + index] = element;
+
     }
 
     @Override

@@ -158,11 +158,9 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements IList
     }
 
     @Override
-    public T set(int index, T change) {
+    public void set(int index, T change) {
         DoubleSegment<T> segment = getSegment(index);
-        T retElement = segment.element;
         segment.element = change;
-        return retElement;
     }
 
     @Override

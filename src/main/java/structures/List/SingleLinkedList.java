@@ -169,17 +169,15 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
     }
 
     @Override
-    public T set(int index, T change) {
+    public void set(int index, T change) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
 
         Segment<T> segment = firstSegment;
-        for(int i = 0; i < index; i++)
+        for(int i = 0; i < index; i++) {
             segment = segment.nextSegment;
-
-        T retElement = segment.element;
+        }
         segment.element = change;
-        return retElement;
     }
 
     @Override
