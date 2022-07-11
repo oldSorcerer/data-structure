@@ -34,18 +34,18 @@ class LinearListTest {
 
     @Test
     void indexOf() {
-        LinearList<String> list = new LinearList<>(3);
-        list.add("меня");
-        list.add("зовут");
-        list.add("Собака");
-        list.add(0, "Привет");
-        list.add("!");
-        assertEquals(0, list.indexOf("Привет"));
-        assertEquals(1, list.indexOf("меня"));
-        assertEquals(2, list.indexOf("зовут"));
-        assertEquals(3, list.indexOf("Собака"));
-        assertEquals(4, list.indexOf("!"));
-        assertEquals(-1, list.indexOf("Привет!"));
+        stringsList = new LinearList<>(3);
+        stringsList.add("меня");
+        stringsList.add("зовут");
+        stringsList.add("Собака");
+        stringsList.add(0, "Привет");
+        stringsList.add("!");
+        assertEquals(0, stringsList.indexOf("Привет"));
+        assertEquals(1, stringsList.indexOf("меня"));
+        assertEquals(2, stringsList.indexOf("зовут"));
+        assertEquals(3, stringsList.indexOf("Собака"));
+        assertEquals(4, stringsList.indexOf("!"));
+        assertEquals(-1, stringsList.indexOf("Привет!"));
     }
 
     @Test
@@ -71,57 +71,62 @@ class LinearListTest {
 
     @Test
     void addWithRecreateLeft() {
-        LinearList<String> list = new LinearList<>(3);
-        list.add("меня");
-        list.add("зовут");
-        list.add("Собака");
-        list.add(0, "Привет");
-        list.add("!");
-        assertEquals(5, list.size());
-        assertEquals("Привет", list.get(0));
-        assertEquals("меня", list.get(1));
-        assertEquals("зовут", list.get(2));
-        assertEquals("Собака", list.get(3));
-        assertEquals("!", list.get(4));
+        stringsList = new LinearList<>(3);
+        stringsList.add("меня");
+        stringsList.add("зовут");
+        stringsList.add("Собака");
+        stringsList.add(0, "Привет");
+        stringsList.add("!");
+        assertEquals(5, stringsList.size());
+        assertEquals("Привет", stringsList.get(0));
+        assertEquals("меня", stringsList.get(1));
+        assertEquals("зовут", stringsList.get(2));
+        assertEquals("Собака", stringsList.get(3));
+        assertEquals("!", stringsList.get(4));
     }
 
     @Test
     void addWithLeftReserve() {
-        LinearList<String> list = new LinearList<>(3);
-        list.add("зовут");
-        list.add("Собака");
-        list.add("!");
-        list.add(0, "Привет");
-        list.add(1, "меня");
-        assertEquals(5, list.size());
-        assertEquals("Привет", list.get(0));
-        assertEquals("меня", list.get(1));
-        assertEquals("зовут", list.get(2));
-        assertEquals("Собака", list.get(3));
+        stringsList = new LinearList<>(3);
+        stringsList.add("зовут");
+        stringsList.add("Собака");
+        stringsList.add("!");
+        stringsList.add(0, "Привет");
+        stringsList.add(1, "меня");
+        assertEquals(5, stringsList.size());
+        assertEquals("Привет", stringsList.get(0));
+        assertEquals("меня", stringsList.get(1));
+        assertEquals("зовут", stringsList.get(2));
+        assertEquals("Собака", stringsList.get(3));
+        assertEquals("!", stringsList.get(4));
     }
 
     @Test
     void addWithLeftShift() {
-        LinearList<String> list = new LinearList<>(4);
-        list.add("Привет");
-        list.add("зовут");
-        list.add("Собака");
-        list.add(1, "меня");
-        assertEquals(4, list.size());
-        assertEquals("Привет", list.get(0));
-        assertEquals("меня", list.get(1));
-        assertEquals("зовут", list.get(2));
-        assertEquals("Собака", list.get(3));
+        stringsList = new LinearList<>(4);
+        stringsList.add("Привет");
+        stringsList.add("зовут");
+        stringsList.add("Собака");
+        stringsList.add(1, "меня");
+        assertEquals(4, stringsList.size());
+        assertEquals("Привет", stringsList.get(0));
+        assertEquals("меня", stringsList.get(1));
+        assertEquals("зовут", stringsList.get(2));
+        assertEquals("Собака", stringsList.get(3));
     }
 
     @Test
     void addWithRightShift() {
-        LinearList<String> list = new LinearList<>(4);
-        list.add("меня");
-        list.add("зовут");
-        list.add(0, "Привет");
-        list.add("Собака");
-        assertEquals(4, list.size());
+        stringsList = new LinearList<>(4);
+        stringsList.add("меня");
+        stringsList.add("зовут");
+        stringsList.add(0, "Привет");
+        stringsList.add("Собака");
+        assertEquals(4, stringsList.size());
+        assertEquals("Привет", stringsList.get(0));
+        assertEquals("меня", stringsList.get(1));
+        assertEquals("зовут", stringsList.get(2));
+        assertEquals("Собака", stringsList.get(3));
     }
 
     @Test

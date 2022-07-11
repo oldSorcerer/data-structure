@@ -65,14 +65,13 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     }
 
     private void addLeftShift (int index, T element) {
-        start = (items.length - size) / 2;
 
         for (int i = size - 1; i >= index; i--) {
             items[start + i + 1] = items[i];
         }
         items[start + index] = element;
 
-        for (int i = index; i >= 0 ; i--) {
+        for (int i = index - 1; i >= 0 ; i--) {
             items[start + i] = items[i];
         }
         Arrays.fill(items, 0, start, null);
@@ -114,6 +113,7 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
             newStart = (items.length * 2 - size) / 2;
         }
         Object[] newItems = new Object[items.length * 2];
+
         for (int i = 0; i < index; i++) {
             newItems[newStart + i] = items[start + i];
         }// if (index >= 0) System.arraycopy(items, start + 0, newItems, newStart + 0, index);
