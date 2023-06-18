@@ -7,75 +7,73 @@ import static org.junit.jupiter.api.Assertions.*;
 class SingleLinkedListTest {
 
     @Test
-    void add (){
+    void add() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.add ("зовут");
-        stringSingleLinkedList.add ("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
+        assertEquals(4, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
     }
 
     @Test
-    void addWithIndex(){
+    void addWithIndex() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.add ("зовут");
-        stringSingleLinkedList.add ("Собака");
-        stringSingleLinkedList.add (0, "Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
+        stringSingleLinkedList.add(0, "Привет");
         stringSingleLinkedList.add(1, ",");
-        assertEquals(5,stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals(",", stringSingleLinkedList.get(1) );
-        assertEquals("меня", stringSingleLinkedList.get(2) );
-        assertEquals("зовут", stringSingleLinkedList.get(3) );
-        assertEquals("Собака", stringSingleLinkedList.get(4) );
+        assertEquals(5, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals(",", stringSingleLinkedList.get(1));
+        assertEquals("меня", stringSingleLinkedList.get(2));
+        assertEquals("зовут", stringSingleLinkedList.get(3));
+        assertEquals("Собака", stringSingleLinkedList.get(4));
     }
 
     @Test
-    void addWrong (){
+    void addWrong() {
         try {
             SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
             stringSingleLinkedList.add(2, " ");
             fail("No exception");
-        }
-        catch (IllegalArgumentException ignored){
+        } catch (IllegalArgumentException ignored) {
 
         }
     }
 
     @Test
-    void set(){
+    void set() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
         stringSingleLinkedList.add("зовут");
         stringSingleLinkedList.add("Собака");
         stringSingleLinkedList.set(3, "Кошка");
-        assertEquals(4,stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
+        assertEquals(4, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
         assertEquals("Кошка", stringSingleLinkedList.get(3));
     }
 
     @Test
-    void setWrong(){
-        try{
-        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.set(3, " ");
-        fail("No exception");
-        }
-        catch (IllegalArgumentException ignored){
+    void setWrong() {
+        try {
+            SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
+            stringSingleLinkedList.set(3, " ");
+            fail("No exception");
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
     @Test
-    void indexOf (){
+    void indexOf() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
@@ -86,51 +84,15 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeOneElement(){
+    void removeOneElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.remove(0);
         assertEquals(0, stringSingleLinkedList.size());
-        stringSingleLinkedList.add ("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.add ("зовут");
-        stringSingleLinkedList.add ("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
-    }
-
-    @Test
-    void removeFirstOf2Elements(){
-        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.remove(0);
-        assertEquals(1, stringSingleLinkedList.size());
-        assertEquals("меня", stringSingleLinkedList.get(0));
-        stringSingleLinkedList.add(0, "Привет");
+        stringSingleLinkedList.add("меня");
         stringSingleLinkedList.add("зовут");
-        stringSingleLinkedList.add ("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
-    }
-
-    @Test
-    void removeSecondOf2Elements(){
-        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.remove(1);
-        assertEquals(1, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0));
-        stringSingleLinkedList.add(1, "меня");
-        stringSingleLinkedList.add("зовут");
-        stringSingleLinkedList.add ("Собака");
+        stringSingleLinkedList.add("Собака");
         assertEquals(4, stringSingleLinkedList.size());
         assertEquals("Привет", stringSingleLinkedList.get(0));
         assertEquals("меня", stringSingleLinkedList.get(1));
@@ -139,47 +101,83 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeFirstOfMany(){
+    void removeFirstOf2Elements() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.add ("зовут");
-        stringSingleLinkedList.add ("Собака");
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.remove(0);
+        assertEquals(1, stringSingleLinkedList.size());
+        assertEquals("меня", stringSingleLinkedList.get(0));
+        stringSingleLinkedList.add(0, "Привет");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
+        assertEquals(4, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
+    }
+
+    @Test
+    void removeSecondOf2Elements() {
+        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.remove(1);
+        assertEquals(1, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        stringSingleLinkedList.add(1, "меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
+        assertEquals(4, stringSingleLinkedList.size());
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
+    }
+
+    @Test
+    void removeFirstOfMany() {
+        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
         stringSingleLinkedList.remove(0);
         assertEquals(3, stringSingleLinkedList.size());
-        assertEquals("меня", stringSingleLinkedList.get(0) );
-        assertEquals("зовут", stringSingleLinkedList.get(1) );
-        assertEquals("Собака", stringSingleLinkedList.get(2) );
+        assertEquals("меня", stringSingleLinkedList.get(0));
+        assertEquals("зовут", stringSingleLinkedList.get(1));
+        assertEquals("Собака", stringSingleLinkedList.get(2));
         stringSingleLinkedList.add(0, "Привет");
         assertEquals(4, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
     }
 
     @Test
-    void removeLastOfMany(){
+    void removeLastOfMany() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("Привет");
-        stringSingleLinkedList.add ("меня");
-        stringSingleLinkedList.add ("зовут");
-        stringSingleLinkedList.add ("Собака");
+        stringSingleLinkedList.add("Привет");
+        stringSingleLinkedList.add("меня");
+        stringSingleLinkedList.add("зовут");
+        stringSingleLinkedList.add("Собака");
         stringSingleLinkedList.remove(3);
         assertEquals(3, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
         stringSingleLinkedList.add(3, "Собака");
         assertEquals(4, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals("меня", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals("меня", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
     }
 
     @Test
-    void removeOfMany(){
+    void removeOfMany() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add(",");
@@ -188,14 +186,14 @@ class SingleLinkedListTest {
         stringSingleLinkedList.add("Собака");
         stringSingleLinkedList.remove(2);
         assertEquals(4, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0) );
-        assertEquals(",", stringSingleLinkedList.get(1) );
-        assertEquals("зовут", stringSingleLinkedList.get(2) );
-        assertEquals("Собака", stringSingleLinkedList.get(3) );
+        assertEquals("Привет", stringSingleLinkedList.get(0));
+        assertEquals(",", stringSingleLinkedList.get(1));
+        assertEquals("зовут", stringSingleLinkedList.get(2));
+        assertEquals("Собака", stringSingleLinkedList.get(3));
     }
 
     @Test
-    void removeElementOfElement(){
+    void removeElementOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         assertTrue(stringSingleLinkedList.remove("Привет"));
@@ -204,7 +202,7 @@ class SingleLinkedListTest {
         stringSingleLinkedList.add("меня");
         stringSingleLinkedList.add("зовут");
         stringSingleLinkedList.add("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
+        assertEquals(4, stringSingleLinkedList.size());
         assertEquals("Привет", stringSingleLinkedList.get(0));
         assertEquals("меня", stringSingleLinkedList.get(1));
         assertEquals("зовут", stringSingleLinkedList.get(2));
@@ -212,7 +210,7 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeFirstOf2ElementsOfElement(){
+    void removeFirstOf2ElementsOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
@@ -222,7 +220,7 @@ class SingleLinkedListTest {
         stringSingleLinkedList.add(0, "Привет");
         stringSingleLinkedList.add("зовут");
         stringSingleLinkedList.add("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
+        assertEquals(4, stringSingleLinkedList.size());
         assertEquals("Привет", stringSingleLinkedList.get(0));
         assertEquals("меня", stringSingleLinkedList.get(1));
         assertEquals("зовут", stringSingleLinkedList.get(2));
@@ -248,7 +246,7 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeFirstOfManyOfElement(){
+    void removeFirstOfManyOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
@@ -268,7 +266,7 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeLastOfManyOfElement(){
+    void removeLastOfManyOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
@@ -289,9 +287,9 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeOfManyOfElement(){
+    void removeOfManyOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("Привет");
+        stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add(",");
         stringSingleLinkedList.add("меня");
         stringSingleLinkedList.add("зовут");
@@ -321,15 +319,15 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeZeroOfElement(){
+    void removeZeroOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add ("Привет");
+        stringSingleLinkedList.add("Привет");
         assertFalse(stringSingleLinkedList.remove("Привет!"));
         assertEquals(1, stringSingleLinkedList.size());
         stringSingleLinkedList.add("меня");
         stringSingleLinkedList.add("зовут");
         stringSingleLinkedList.add("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
+        assertEquals(4, stringSingleLinkedList.size());
         assertEquals("Привет", stringSingleLinkedList.get(0));
         assertEquals("меня", stringSingleLinkedList.get(1));
         assertEquals("зовут", stringSingleLinkedList.get(2));
@@ -337,7 +335,7 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeZeroOf2ElementsOfElement(){
+    void removeZeroOf2ElementsOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
@@ -346,7 +344,7 @@ class SingleLinkedListTest {
         assertEquals("меня", stringSingleLinkedList.get(1));
         stringSingleLinkedList.add("зовут");
         stringSingleLinkedList.add("Собака");
-        assertEquals(4,stringSingleLinkedList.size());
+        assertEquals(4, stringSingleLinkedList.size());
         assertEquals("Привет", stringSingleLinkedList.get(0));
         assertEquals("меня", stringSingleLinkedList.get(1));
         assertEquals("зовут", stringSingleLinkedList.get(2));
@@ -354,7 +352,7 @@ class SingleLinkedListTest {
     }
 
     @Test
-    void removeZeroOfManyOfElement(){
+    void removeZeroOfManyOfElement() {
         SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
         stringSingleLinkedList.add("Привет");
         stringSingleLinkedList.add("меня");
