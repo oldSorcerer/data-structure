@@ -12,7 +12,6 @@ public class Utils {
         } else {
             return element1 != null && ((Comparable<T>) element1).compareTo(element2) > 0;
         }
-
     }
     //TODO: Зачем тебе вообще поиск екстремума, если в списках он не нужен,
     // это математическая операция жестко завязанная
@@ -31,6 +30,4 @@ public class Utils {
         }
         return tmp;
     }
-
-
 }

@@ -183,7 +183,7 @@ class DoubleLinkedListTest {
         DoubleLinkedList<String> list = new DoubleLinkedList<>();
         list.add("Привет");
         assertTrue(list.remove("Привет"));
-        assertEquals(0,list.size());
+        assertEquals(0, list.size());
         list.add("Привет");
         list.add("меня");
         list.add("зовут");

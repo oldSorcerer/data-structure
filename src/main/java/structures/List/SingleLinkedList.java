@@ -7,11 +7,18 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SingleLinkedList <T> extends AbstractCollection<T> implements IList<T> {
+public class SingleLinkedList<T> extends AbstractCollection<T> implements IList<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;
     private int size;
+
+//
+//    private static class Segment<T> {
+//        private T element;
+//        private Segment<T> nextSegment;
+//    }
+
 
     @Override
     public int size() {
@@ -28,11 +35,11 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
         if (index < 0 || index > size)
             throw new IllegalArgumentException("Not correct index");
 
-        Segment <T> newSegment = new Segment<>();
+        Segment<T> newSegment = new Segment<>();
         newSegment.element = element;
 
         if (index == size) {
-          if (size == 0)
+            if (size == 0)
                 firstSegment = newSegment;
             else
                 lastSegment.nextSegment = newSegment;
@@ -42,14 +49,14 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
             return;
         }
 
-        if (index == 0){
+        if (index == 0) {
             newSegment.nextSegment = firstSegment;
             firstSegment = newSegment;
             size++;
             return;
         }
         Segment<T> previous = firstSegment;
-        for (int i = 1; i < index ; i++) {
+        for (int i = 1; i < index; i++) {
             previous = previous.nextSegment;
         }
         newSegment.nextSegment = previous.nextSegment;
@@ -61,33 +68,34 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
     public void remove(int index) {
         if (index < 0 || index >= size)
             throw new IllegalArgumentException("Not correct index");
-        if (size == 1){
+
+        if (size == 1) {
             firstSegment = null;
             lastSegment = null;
             size--;
             return;
         }
-        if (size == 2){
+        if (size == 2) {
             if (index == 0)
                 firstSegment = lastSegment;
             else {
                 lastSegment = firstSegment;
                 firstSegment.nextSegment = null;
             }
-             size--;
+            size--;
             return;
         }
-        if (index == 0){
+        if (index == 0) {
             firstSegment = firstSegment.nextSegment;
             size--;
-          return;
+            return;
         }
-        Segment <T> previous = firstSegment;
-        for (int i = 1; i < index ; i++)
+        Segment<T> previous = firstSegment;
+        for (int i = 1; i < index; i++)
             previous = previous.nextSegment;
         previous.nextSegment = previous.nextSegment.nextSegment;
 
-        if (index == size -1)
+        if (index == size - 1)
             lastSegment = previous;
         size--;
     }
@@ -98,29 +106,42 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
         if (size == 0)
             return false;
 
-        if (size == 1){
+        if (size == 1) {
             return removeWhenOne(element);
         }
 
-        if (size == 2){
+        if (size == 2) {
             return removeWhenTwo(element);
         }
         return findAndRemove(element);
     }
 
     private boolean removeWhenOne(T element) {
-        if (Objects.equals(firstSegment.element,element)){
+        if (Objects.equals(firstSegment.element, element)) {
             firstSegment = lastSegment = null;
             size--;
             return true;
-        }
-        else
+        } else
+            return false;
+    }
+
+    private boolean removeWhenTwo(T element) {
+        if (Objects.equals(firstSegment.element, element)) {
+            firstSegment = lastSegment;
+            size--;
+            return true;
+        } else if (Objects.equals(lastSegment.element, element)) {
+            lastSegment = firstSegment;
+            firstSegment.nextSegment = null;
+            size--;
+            return true;
+        } else
             return false;
     }
 
     private boolean findAndRemove(T element) {
 
-        if (Objects.equals(firstSegment.element, element)){
+        if (Objects.equals(firstSegment.element, element)) {
             firstSegment = firstSegment.nextSegment;
             size--;
             return true;
@@ -128,32 +149,16 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
 
         Segment<T> previous = firstSegment;
         for (int i = 1; i < size; i++) {
-            if (Objects.equals(previous.nextSegment.element, element)){
+            if (Objects.equals(previous.nextSegment.element, element)) {
                 previous.nextSegment = previous.nextSegment.nextSegment;
                 if (i == size - 1)
                     lastSegment = previous;
                 size--;
-                return  true;
+                return true;
             }
             previous = previous.nextSegment;
         }
         return false;
-    }
-
-    private boolean removeWhenTwo(T element) {
-        if (Objects.equals(firstSegment.element, element)){
-            firstSegment = lastSegment;
-            size--;
-            return true;
-        }
-        else if (Objects.equals(lastSegment.element, element)){
-            lastSegment = firstSegment;
-            firstSegment.nextSegment = null;
-            size--;
-            return true;
-        }
-        else
-            return false;
     }
 
     @Override
@@ -162,7 +167,7 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
             throw new IllegalArgumentException("Not correct index");
 
         Segment<T> segment = firstSegment;
-        for(int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++)
             segment = segment.nextSegment;
 
         return segment.element;
@@ -174,7 +179,7 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
             throw new IllegalArgumentException("Not correct index");
 
         Segment<T> segment = firstSegment;
-        for(int i = 0; i < index; i++) {
+        for (int i = 0; i < index; i++) {
             segment = segment.nextSegment;
         }
         segment.element = change;
@@ -196,12 +201,11 @@ public class SingleLinkedList <T> extends AbstractCollection<T> implements IList
         firstSegment = null;
         lastSegment = null;
         size = 0;
-
     }
 
     @Override
     public void sort(boolean back) {
-        for (int i = size; i > 1 ; i--) {
+        for (int i = size; i > 1; i--) {
             Segment<T> segment = firstSegment;
             for (int j = 1; j < i; j++) {
                 if (Utils.compare(segment.element, segment.nextSegment.element, back)) {

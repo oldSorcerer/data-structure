@@ -31,7 +31,6 @@ class LinearListTest {
         stringsList.add("Собака");
     }
 
-
     @Test
     void indexOf() {
         stringsList = new LinearList<>(3);
@@ -138,17 +137,16 @@ class LinearListTest {
         assertEquals("меня", stringsList.get(1));
         assertEquals("зовут", stringsList.get(2));
         assertEquals("Собака", stringsList.get(3));
-
     }
 
     @Test
     void removeRight() {
         fillList5Strings();
-        stringsList.remove(1);
+        stringsList.remove(3);
         assertEquals(4, stringsList.size());
         assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
+        assertEquals(",", stringsList.get(1));
+        assertEquals("меня", stringsList.get(2));
         assertEquals("Собака", stringsList.get(3));
     }
 
@@ -169,6 +167,7 @@ class LinearListTest {
 
     @Test
     void clear() {
+        stringsList = new LinearList<>();
         fillList5Strings();
         stringsList.clear();
         assertEquals(0, stringsList.size());

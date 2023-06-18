@@ -12,7 +12,7 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     private int start;
 
     public LinearList() {
-        items = new Object[8];
+        items = new Object[10];
     }
 
     public LinearList(int capacity) {
@@ -57,42 +57,41 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
                     addRightShift(index, element);
                 }
             }
-        }
-        else { // Резерва нет!! пересоздаение массива!
+        } else { // Резерва нет!! пересоздаение массива!
             recreateItems(index, element);
         }
         size++;
     }
 
-    private void addLeftShift (int index, T element) {
+    private void addLeftShift(int index, T element) {
 
         for (int i = size - 1; i >= index; i--) {
             items[start + i + 1] = items[i];
         }
         items[start + index] = element;
 
-        for (int i = index - 1; i >= 0 ; i--) {
+        for (int i = index - 1; i >= 0; i--) {
             items[start + i] = items[i];
         }
         Arrays.fill(items, 0, start, null);
     }
 
-    private void addLeft (int index, T element) {
-        for (int i = 0; i < index ; i++)
+    private void addLeft(int index, T element) {
+        for (int i = 0; i < index; i++)
             items[start + i - 1] = items[start + i];
         start--;
         items[start + index] = element;
     }
 
-    private void addRight (int index, T element) {
-        for (int i = size; i > index ; i--)
+    private void addRight(int index, T element) {
+        for (int i = size; i > index; i--)
             items[start + i] = items[start + i - 1];
         items[start + index] = element;
     }
 
-    private void addRightShift (int index, T element) {
+    private void addRightShift(int index, T element) {
         int newStart = start / 2;
-        for (int i = 0; i < index ; i++) {
+        for (int i = 0; i < index; i++) {
             items[newStart + i] = items[start + i];
         }
         items[newStart + index] = element;
@@ -120,7 +119,7 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
 
         newItems[newStart + index] = element;
 
-        for (int i = index ; i < size; i++) {
+        for (int i = index; i < size; i++) {
             newItems[newStart + i + 1] = items[start + i];
         }
         items = newItems;
@@ -134,17 +133,17 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
 
         if (items.length > size * 4) {
             recreateItems(index);
-        }
-        else {
+        } else {
             if (index <= size / 2) {
-                for (int i = index; i > 0 ; i--)
+                for (int i = index; i > 0; i--) {
                     items[start + i] = items[start + i - 1];
+                }
                 items[start] = null;
                 start++;
-            }
-            else {
-                for (int i = index; i < size - 1 ; i++)
+            } else {
+                for (int i = index; i < size - 1; i++) {
                     items[start + i] = items[start + i + 1];
+                }
                 items[size] = null;
             }
         }
@@ -162,7 +161,8 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
             newItems[newStart + i] = items[start + i];
         }
         for (int i = index; i < size - 1; i++) {
-            newItems[newStart + i] = items[start + i + 1];
+            newItems[newStart + i] = items[start + i + 1];  // проверить на ошибку
+
         }
         items = newItems;
         start = newStart;
@@ -192,7 +192,6 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
             throw new IllegalArgumentException("Not correct index");
         }
         items[start + index] = element;
-
     }
 
     @Override
@@ -229,8 +228,8 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
         items[begin] = tmp;
         index = 0;
 
-        for (int i = 1; i < size ; i++) {
-            if (Utils.compare((T)items[begin + index], (T)items[begin + i], back)) {
+        for (int i = 1; i < size; i++) {
+            if (Utils.compare((T) items[begin + index], (T) items[begin + i], back)) {
                 items[begin + index] = items[begin + i];
                 items[begin + i] = items[begin + index + 1];
                 items[begin + index + 1] = tmp;
