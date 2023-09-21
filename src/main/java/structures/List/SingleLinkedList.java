@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SingleLinkedList<T> extends AbstractCollection<T> implements IList<T> {
+public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;

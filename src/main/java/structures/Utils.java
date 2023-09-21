@@ -1,6 +1,6 @@
 package structures;
 
-import structures.List.IList;
+import structures.List.List;
 
 public class Utils {
 
@@ -17,7 +17,7 @@ public class Utils {
     // это математическая операция жестко завязанная
     // сравнивать объекты у тебя лист может содержать элементы не Компарабельные,
     // что тогда твой екстремум будет возвращать?
-    public static <T> T extremum (IList<T> list, boolean max) {
+    public static <T> T extremum (List<T> list, boolean max) {
 
         if (list.size() == 0) {
             return null;

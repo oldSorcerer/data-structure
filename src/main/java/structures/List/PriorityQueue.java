@@ -6,7 +6,7 @@ import structures.Utils;
 public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection<T> implements IQueue<T> {
 
     private final boolean min;
-    private final LinearList<T> list = new LinearList<>();
+    private final ArrayList<T> list = new ArrayList<>();
 
     public PriorityQueue(boolean min) {
         this.min = min;

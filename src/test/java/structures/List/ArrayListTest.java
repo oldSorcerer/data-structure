@@ -7,13 +7,13 @@ import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LinearListTest {
+class ArrayListTest {
 
-    private LinearList<String> stringsList;
+    private ArrayList<String> stringsList;
 
     @BeforeEach
     void init() {
-        stringsList = new LinearList<>();
+        stringsList = new ArrayList<>();
     }
 
     void fillListFourStrings() {
@@ -33,7 +33,7 @@ class LinearListTest {
 
     @Test
     void indexOf() {
-        stringsList = new LinearList<>(3);
+        stringsList = new ArrayList<>(3);
         stringsList.add("меня");
         stringsList.add("зовут");
         stringsList.add("Собака");
@@ -59,7 +59,7 @@ class LinearListTest {
 
     @Test
     void addWithCapacity() {
-        stringsList = new LinearList<>(2);
+        stringsList = new ArrayList<>(2);
         fillListFourStrings();
         assertEquals(4, stringsList.size());
         assertEquals("Привет", stringsList.get(0));
@@ -70,7 +70,7 @@ class LinearListTest {
 
     @Test
     void addWithRecreateLeft() {
-        stringsList = new LinearList<>(3);
+        stringsList = new ArrayList<>(3);
         stringsList.add("меня");
         stringsList.add("зовут");
         stringsList.add("Собака");
@@ -86,7 +86,7 @@ class LinearListTest {
 
     @Test
     void addWithLeftReserve() {
-        stringsList = new LinearList<>(3);
+        stringsList = new ArrayList<>(3);
         stringsList.add("зовут");
         stringsList.add("Собака");
         stringsList.add("!");
@@ -102,7 +102,7 @@ class LinearListTest {
 
     @Test
     void addWithLeftShift() {
-        stringsList = new LinearList<>(4);
+        stringsList = new ArrayList<>(4);
         stringsList.add("Привет");
         stringsList.add("зовут");
         stringsList.add("Собака");
@@ -116,7 +116,7 @@ class LinearListTest {
 
     @Test
     void addWithRightShift() {
-        stringsList = new LinearList<>(4);
+        stringsList = new ArrayList<>(4);
         stringsList.add("меня");
         stringsList.add("зовут");
         stringsList.add(0, "Привет");
@@ -152,7 +152,7 @@ class LinearListTest {
 
     @Test
     void remove() throws NoSuchFieldException, IllegalAccessException {
-        stringsList = new LinearList<>(100);
+        stringsList = new ArrayList<>(100);
         fillList5Strings();
         stringsList.remove(1);
         assertEquals(4, stringsList.size());
@@ -160,14 +160,14 @@ class LinearListTest {
         assertEquals("меня", stringsList.get(1));
         assertEquals("зовут", stringsList.get(2));
         assertEquals("Собака", stringsList.get(3));
-        Field f = LinearList.class.getDeclaredField("items");
+        Field f = ArrayList.class.getDeclaredField("items");
         f.setAccessible(true);
         assertEquals(50, ((Object[]) f.get(stringsList)).length);
     }
 
     @Test
     void clear() {
-        stringsList = new LinearList<>();
+        stringsList = new ArrayList<>();
         fillList5Strings();
         stringsList.clear();
         assertEquals(0, stringsList.size());
@@ -175,7 +175,7 @@ class LinearListTest {
 
     @Test
     void sort() {
-        LinearList<Integer> list = new LinearList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
         list.add(4);
         list.add(-9);
@@ -195,7 +195,7 @@ class LinearListTest {
 
     @Test
     void sortBack() {
-        LinearList<Integer> list = new LinearList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
         list.add(4);
         list.add(-9);
@@ -215,7 +215,7 @@ class LinearListTest {
 
     @Test
     void iterator() {
-        LinearList<Integer> list = new LinearList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         list.add(5);
         list.add(4);
         list.add(-9);
