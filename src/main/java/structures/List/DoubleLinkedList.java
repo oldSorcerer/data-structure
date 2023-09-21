@@ -5,7 +5,7 @@ import structures.Utils;
 
 import java.util.*;
 
-public class DoubleLinkedList <T> extends AbstractCollection<T> implements IList<T> {
+public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<T> {
 
     private DoubleSegment<T> firstSegment;
     private DoubleSegment<T> lastSegment;
