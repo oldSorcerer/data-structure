@@ -5,17 +5,17 @@ import structures.Utils;
 
 import java.util.*;
 
-public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
+public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 
     private Object[] items;
     private int size;
     private int start;
 
-    public LinearList() {
+    public ArrayList() {
         items = new Object[10];
     }
 
-    public LinearList(int capacity) {
+    public ArrayList(int capacity) {
         if (capacity < 1) {
             throw new IllegalArgumentException("Capacity must be greater than zero");
         }
@@ -77,15 +77,17 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     }
 
     private void addLeft(int index, T element) {
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++) {
             items[start + i - 1] = items[start + i];
+        }
         start--;
         items[start + index] = element;
     }
 
     private void addRight(int index, T element) {
-        for (int i = size; i > index; i--)
+        for (int i = size; i > index; i--) {
             items[start + i] = items[start + i - 1];
+        }
         items[start + index] = element;
     }
 
@@ -179,6 +181,7 @@ public class LinearList<T> extends AbstractCollection<T> implements IList<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T get(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
