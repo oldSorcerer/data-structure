@@ -164,7 +164,6 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
         }
         for (int i = index; i < size - 1; i++) {
             newItems[newStart + i] = items[start + i + 1];  // проверить на ошибку
-
         }
         items = newItems;
         start = newStart;
