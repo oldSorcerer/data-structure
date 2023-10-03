@@ -1,6 +1,6 @@
-package structures.List;
+package structures.list;
 
-class DoubleSegment <T> {
+public class DoubleSegment <T> {
     public T element;
     public DoubleSegment <T> nextSegment;
     public DoubleSegment <T> prevSegment;

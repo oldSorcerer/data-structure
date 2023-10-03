@@ -1,9 +1,9 @@
-package structures.Tree;
+package structures.tree;
 
 import java.util.Iterator;
 import java.util.Random;
 
-public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
+public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
 
     private Node<T> root;
     private int sizeTree;
@@ -23,23 +23,21 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
             root.element = element;
             sizeTree++;
             return true;
-        }
-        else if (element.compareTo(parent.element) > 0) {
+        } else if (element.compareTo(parent.element) > 0) {
             parent.rightChild = new Node<T>();
             parent.rightChild.parent = parent;
             parent.rightChild.element = element;
             sizeTree++;
             return true;
-        }
-        else if (element.compareTo(parent.element) < 0) {
+        } else if (element.compareTo(parent.element) < 0) {
             parent.leftChild = new Node<T>();
             parent.leftChild.parent = parent;
             parent.leftChild.element = element;
             sizeTree++;
             return true;
-        }
-        else
+        } else {
             return false;
+        }
     }
 
     @Override
@@ -47,39 +45,34 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
 
         Node<T> removeNode = findNode(element, false);
 
-        if (removeNode == null)
+        if (removeNode == null) {
             return false;
-        else if (removeNode.leftChild == null && removeNode.rightChild == null) {
-            if (removeNode == root )
+        } else if (removeNode.leftChild == null && removeNode.rightChild == null) {
+            if (removeNode == root) {
                 root = null;
-            else if (removeNode.parent.leftChild == removeNode)
+            } else if (removeNode.parent.leftChild == removeNode) {
                 removeNode.parent.leftChild = null;
-            else
+            } else {
                 removeNode.parent.rightChild = null;
-        }
-        else if (removeNode.leftChild != null && removeNode.rightChild == null) {
+            }
+        } else if (removeNode.leftChild != null && removeNode.rightChild == null) {
             removeWithOneChild(removeNode, true);
-        }
-        else if (removeNode.leftChild == null && removeNode.rightChild != null) {
+        } else if (removeNode.leftChild == null && removeNode.rightChild != null) {
             removeWithOneChild(removeNode, false);
-        }
-        else {
+        } else {
             if (removeNode == root) {
                 if (new Random().nextBoolean()) {
                     root = removeNode.leftChild;
                     root.parent = null;
                     hangRight(removeNode);
-                }
-                else {
+                } else {
                     root = removeNode.rightChild;
                     root.parent = null;
                     hangLeft(removeNode);
                 }
-            }
-            else if (removeNode.parent.leftChild == removeNode) {
+            } else if (removeNode.parent.leftChild == removeNode) {
                 removeBothChildren(removeNode, true);
-            }
-            else {
+            } else {
                 removeBothChildren(removeNode, false);
             }
         }
@@ -89,20 +82,20 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
 
     private void removeBothChildren(Node<T> removeNode, boolean isLeft) {
         if (new Random().nextBoolean()) {
-            if (isLeft)
+            if (isLeft) {
                 removeNode.parent.leftChild = removeNode.leftChild;
-            else
+            } else {
                 removeNode.parent.rightChild = removeNode.leftChild;
+            }
 
             removeNode.leftChild.parent = removeNode.parent;
             hangRight(removeNode);
-        }
-        else {
-            if (isLeft)
+        } else {
+            if (isLeft) {
                 removeNode.parent.leftChild = removeNode.rightChild;
-            else
+            } else {
                 removeNode.parent.rightChild = removeNode.rightChild;
-
+            }
             removeNode.rightChild.parent = removeNode.parent;
             hangLeft(removeNode);
         }
@@ -124,12 +117,10 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
         if (removeNode == root) {
             root = (isLeft ? removeNode.leftChild : removeNode.rightChild);
             root.parent = null;
-        }
-        else if (removeNode.parent.leftChild == removeNode) {
+        } else if (removeNode.parent.leftChild == removeNode) {
             removeNode.parent.leftChild = (isLeft ? removeNode.leftChild : removeNode.rightChild);
             (isLeft ? removeNode.leftChild : removeNode.rightChild).parent = removeNode.parent;
-        }
-        else {
+        } else {
             removeNode.parent.rightChild = (isLeft ? removeNode.leftChild : removeNode.rightChild);
             (isLeft ? removeNode.leftChild : removeNode.rightChild).parent = removeNode.parent;
         }
@@ -163,19 +154,20 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
                 if (currentNode.rightChild == null) {
                     if (currentNode.parent != null && currentNode.parent.leftChild == currentNode) {
                         currentNode = currentNode.parent;
-                    }
-                    else {
+                    } else {
                         Node<T> current = currentNode.parent;
 
                         while (current != null && current.parent != null && current == current.parent.rightChild) {
                             current = current.parent;
                         }
-                        if (current != null)
+                        if (current != null) {
                             current = current.parent;
+                        }
                         currentNode = current;
                     }
+                } else {
+                    currentNode = mostChild(currentNode.rightChild, true);
                 }
-                else currentNode = mostChild(currentNode.rightChild, true);
 
                 counter++;
                 return result.element;
@@ -184,7 +176,7 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
     }
 
     private Node<T> mostChild(Node<T> current, boolean isLeft) {
-        while (current != null && (isLeft ? current.leftChild : current.rightChild)  !=null) {
+        while (current != null && (isLeft ? current.leftChild : current.rightChild) != null) {
             current = isLeft ? current.leftChild : current.rightChild;
         }
         return current;
@@ -201,12 +193,10 @@ public class SimpleTree<T extends Comparable<T>> implements ITree<T> {
             if (element.compareTo(current.element) > 0) {
                 parentNode = current;
                 current = current.rightChild;
-            }
-            else  if ( element.compareTo(current.element) < 0) {
+            } else if (element.compareTo(current.element) < 0) {
                 parentNode = current;
                 current = current.leftChild;
-            }
-            else return current;
+            } else return current;
         } while (current != null);
 
         return parent ? parentNode : null;

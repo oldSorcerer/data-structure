@@ -1,8 +1,8 @@
-package structures.List;
+package structures.list;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import structures.Tree.SimpleTree;
+import structures.tree.SimpleTree;
 
 import java.util.Random;
 

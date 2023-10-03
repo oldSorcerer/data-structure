@@ -1,6 +1,6 @@
 package structures;
 
-import structures.List.List;
+import structures.list.List;
 
 public class Utils {
 

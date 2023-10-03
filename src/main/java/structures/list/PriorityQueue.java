@@ -1,4 +1,4 @@
-package structures.List;
+package structures.list;
 
 import structures.AbstractCollection;
 import structures.Utils;

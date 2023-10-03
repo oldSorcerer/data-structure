@@ -1,8 +1,8 @@
-package structures.List;
+package structures.list;
 
 import structures.AbstractCollection;
 
-public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
+public class Queue<T> extends AbstractCollection<T> implements IQueue<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;
@@ -14,7 +14,7 @@ public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
     }
 
     @Override
-    public void put(T elementToAdd){
+    public void put(T elementToAdd) {
 
         if (elementToAdd == null) {
             throw new IllegalArgumentException("New element cannot be null");
@@ -23,8 +23,7 @@ public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
         newSegment.element = elementToAdd;
         if (size == 0) {
             firstSegment = newSegment;
-        }
-        else {
+        } else {
             lastSegment.nextSegment = newSegment;
         }
         lastSegment = newSegment;
@@ -32,7 +31,7 @@ public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
     }
 
     @Override
-    public T peek(){
+    public T peek() {
         if (size == 0) {
             return null;
         }
@@ -40,7 +39,7 @@ public class Queue <T> extends AbstractCollection<T> implements IQueue<T> {
     }
 
     @Override
-    public T poll(){
+    public T poll() {
         if (size == 0) {
             return null;
         }
