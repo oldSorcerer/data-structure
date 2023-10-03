@@ -1,8 +1,8 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import structures.tree.SimpleTree;
+import io.sancta.sanctorum.structures.tree.SimplyTree;
 
 import java.util.Random;
 
@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleTreeTest {
 
-    private SimpleTree<Integer> tree;
+    private SimplyTree<Integer> tree;
 
     @BeforeEach
     void init() {
-        tree = new SimpleTree<>();
+        tree = new SimplyTree<>();
     }
 
     @Test

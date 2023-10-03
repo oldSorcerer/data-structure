@@ -1,8 +1,8 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
-import structures.AbstractCollection;
+import io.sancta.sanctorum.structures.AbstractCollection;
 
-public class Queue<T> extends AbstractCollection<T> implements IQueue<T> {
+public class SimplyQueue<T> extends AbstractCollection<T> implements IQueue<T> {
 
     private Segment<T> firstSegment;
     private Segment<T> lastSegment;

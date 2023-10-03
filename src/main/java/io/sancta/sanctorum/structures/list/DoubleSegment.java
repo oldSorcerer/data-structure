@@ -1,4 +1,4 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
 public class DoubleSegment <T> {
     public T element;

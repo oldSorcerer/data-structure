@@ -1,4 +1,4 @@
-package structures.tree;
+package io.sancta.sanctorum.structures.tree;
 
 class Node <T extends Comparable<T>>  {
 

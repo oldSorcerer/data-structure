@@ -1,6 +1,6 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
-import structures.Utils;
+import io.sancta.sanctorum.structures.Utils;
 
 public interface List<T> extends Iterable<T> {
 

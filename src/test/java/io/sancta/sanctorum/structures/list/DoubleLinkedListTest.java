@@ -1,4 +1,4 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
 import org.junit.jupiter.api.Test;
 

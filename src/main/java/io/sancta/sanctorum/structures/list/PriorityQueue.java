@@ -1,7 +1,7 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
-import structures.AbstractCollection;
-import structures.Utils;
+import io.sancta.sanctorum.structures.AbstractCollection;
+import io.sancta.sanctorum.structures.Utils;
 
 public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection<T> implements IQueue<T> {
 

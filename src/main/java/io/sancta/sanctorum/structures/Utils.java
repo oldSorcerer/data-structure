@@ -1,6 +1,6 @@
-package structures;
+package io.sancta.sanctorum.structures;
 
-import structures.list.List;
+import io.sancta.sanctorum.structures.list.List;
 
 public class Utils {
 

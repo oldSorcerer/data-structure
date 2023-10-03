@@ -1,9 +1,9 @@
-package structures.tree;
+package io.sancta.sanctorum.structures.tree;
 
 import java.util.Iterator;
 import java.util.Random;
 
-public class SimpleTree<T extends Comparable<T>> implements Tree<T> {
+public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
 
     private Node<T> root;
     private int sizeTree;

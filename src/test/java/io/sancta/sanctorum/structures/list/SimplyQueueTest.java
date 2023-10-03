@@ -1,16 +1,17 @@
-package structures.list;
+package io.sancta.sanctorum.structures.list;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QueueTest {
-    private Queue<String> stringQueue;
+public class SimplyQueueTest {
+
+    private SimplyQueue<String> stringQueue;
 
     @BeforeEach
     void init() {
-        stringQueue = new Queue<>();
+        stringQueue = new SimplyQueue<>();
     }
 
     void fillQueue() {
