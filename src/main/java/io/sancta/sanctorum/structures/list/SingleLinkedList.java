@@ -13,12 +13,10 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
     private Segment<T> lastSegment;
     private int size;
 
-//
-//    private static class Segment<T> {
-//        private T element;
-//        private Segment<T> nextSegment;
-//    }
-
+    private static class Segment<T> {
+        private T element;
+        private Segment<T> nextSegment;
+    }
 
     @Override
     public int size() {
@@ -39,10 +37,11 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
         newSegment.element = element;
 
         if (index == size) {
-            if (size == 0)
+            if (size == 0) {
                 firstSegment = newSegment;
-            else
+            } else {
                 lastSegment.nextSegment = newSegment;
+            }
 
             lastSegment = newSegment;
             size++;
@@ -220,7 +219,7 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator() {
+        return new Iterator<>() {
 
             private Segment<T> segment = firstSegment;
 

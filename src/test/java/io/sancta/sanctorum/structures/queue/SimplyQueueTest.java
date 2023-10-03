@@ -1,5 +1,6 @@
-package io.sancta.sanctorum.structures.list;
+package io.sancta.sanctorum.structures.queue;
 
+import io.sancta.sanctorum.structures.queue.SimplyQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

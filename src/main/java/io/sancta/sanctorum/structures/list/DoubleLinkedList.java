@@ -13,6 +13,12 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
 
     public boolean quickSort;
 
+    public static class DoubleSegment <T> {
+        public T element;
+        public DoubleSegment <T> nextSegment;
+        public DoubleSegment <T> prevSegment;
+    }
+
     @Override
     public int size() {
         return size;
@@ -25,8 +31,9 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
         DoubleSegment<T> newSegment = new DoubleSegment<>();
         newSegment.element = element;
