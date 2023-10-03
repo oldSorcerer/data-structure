@@ -1,9 +1,10 @@
-package structures.List;
+package io.sancta.sanctorum.structures.queue;
 
-import structures.AbstractCollection;
-import structures.Utils;
+import io.sancta.sanctorum.structures.AbstractCollection;
+import io.sancta.sanctorum.structures.Utils;
+import io.sancta.sanctorum.structures.list.ArrayList;
 
-public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection<T> implements IQueue<T> {
+public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T> implements Queue<T> {
 
     private final boolean min;
     private final ArrayList<T> list = new ArrayList<>();
@@ -12,23 +13,26 @@ public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection
         this.min = min;
     }
 
-    private int leftChild(int number){
+    private int leftChild(int number) {
         number = 2 * number + 1;
-        if (number >= list.size())
+        if (number >= list.size()) {
             return -1;
+        }
         return number;
     }
 
     private int rightChild(int number) {
         number = 2 * number + 2;
-        if (number >= list.size())
+        if (number >= list.size()) {
             return -1;
+        }
         return number;
     }
 
     private int parent(int number) {
-        if (number == 0)
+        if (number == 0) {
             return -1;
+        }
         return (number - 1) / 2;
     }
 
@@ -61,17 +65,16 @@ public class PriorityQueue <T extends Comparable <T>> extends AbstractCollection
         list.remove(list.size() - 1);
         int index = 0;
 
-        while ( (leftChild(index) >= 0 && Utils.compare(list.get(leftChild(index)), list.get(index), min) )  ||
-                (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(index), min) )   ) {
+        while ((leftChild(index) >= 0 && Utils.compare(list.get(leftChild(index)), list.get(index), min)) ||
+               (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(index), min))) {
             // Меняем на правого ребёнка, когда есть правый ребёнок, который приоритетнее, чем левый
             // иначе меняем на левого
-            if (rightChild(index) >= 0 && Utils.compare( list.get(rightChild(index)), list.get(leftChild(index)), min)) {
+            if (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(leftChild(index)), min)) {
                 T tmp = list.get(index);
                 list.set(index, list.get(rightChild(index)));
                 list.set(rightChild(index), tmp);
                 index = rightChild(index);
-            }
-            else {
+            } else {
                 T tmp = list.get(index);
                 list.set(index, list.get(leftChild(index)));
                 list.set(leftChild(index), tmp);

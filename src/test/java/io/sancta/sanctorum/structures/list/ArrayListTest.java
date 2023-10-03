@@ -1,4 +1,4 @@
-package structures.List;
+package io.sancta.sanctorum.structures.list;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
-package structures.List;
+package io.sancta.sanctorum.structures.list;
 
-import structures.AbstractCollection;
-import structures.Utils;
+import io.sancta.sanctorum.structures.AbstractCollection;
+import io.sancta.sanctorum.structures.Utils;
 
 import java.util.*;
 
@@ -12,6 +12,12 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
     private int size;
 
     public boolean quickSort;
+
+    public static class DoubleSegment <T> {
+        public T element;
+        public DoubleSegment <T> nextSegment;
+        public DoubleSegment <T> prevSegment;
+    }
 
     @Override
     public int size() {
@@ -25,8 +31,9 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
         DoubleSegment<T> newSegment = new DoubleSegment<>();
         newSegment.element = element;

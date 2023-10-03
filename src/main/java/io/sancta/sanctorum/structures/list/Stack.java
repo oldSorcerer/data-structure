@@ -1,11 +1,16 @@
-package structures.List;
+package io.sancta.sanctorum.structures.list;
 
-import structures.AbstractCollection;
+import io.sancta.sanctorum.structures.AbstractCollection;
 
 public class Stack <T> extends AbstractCollection<T> {
 
     private Segment<T> lastSegment;
     private int size;
+
+    private static class Segment<T> {
+        private T element;
+        private Segment<T> nextSegment;
+    }
 
     @Override
     public int size() {
