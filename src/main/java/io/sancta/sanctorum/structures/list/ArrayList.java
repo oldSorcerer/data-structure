@@ -159,6 +159,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
             newStart = (items.length / 2 - size) / 2;
         }
         Object[] newItems = new Object[items.length / 2];
+
         for (int i = 0; i < index; i++) {
             newItems[newStart + i] = items[start + i];
         }
