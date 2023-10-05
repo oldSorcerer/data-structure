@@ -31,6 +31,15 @@ class ArrayListTest {
         stringsList.add("Собака");
     }
 
+    void m() {
+        assertAll(" ",
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
+    }
+
     @Test
     void indexOf() {
         stringsList = new ArrayList<>(3);
@@ -39,33 +48,36 @@ class ArrayListTest {
         stringsList.add("Собака");
         stringsList.add(0, "Привет");
         stringsList.add("!");
-        assertEquals(0, stringsList.indexOf("Привет"));
-        assertEquals(1, stringsList.indexOf("меня"));
-        assertEquals(2, stringsList.indexOf("зовут"));
-        assertEquals(3, stringsList.indexOf("Собака"));
-        assertEquals(4, stringsList.indexOf("!"));
-        assertEquals(-1, stringsList.indexOf("Привет!"));
+        assertAll("Сценарий проверки метода indexOf()",
+                () -> m(),
+                () -> assertEquals(4, stringsList.indexOf("!")),
+                () -> assertEquals(-1, stringsList.indexOf("Привет!"))
+        );
     }
 
     @Test
     void add() {
         fillListFourStrings();
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll("Сценарий проверки метода add()",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
     void addWithCapacity() {
         stringsList = new ArrayList<>(2);
         fillListFourStrings();
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll("Сценарий проверки метода add() с увеличением вместимости",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
@@ -76,12 +88,14 @@ class ArrayListTest {
         stringsList.add("Собака");
         stringsList.add(0, "Привет");
         stringsList.add("!");
-        assertEquals(5, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
-        assertEquals("!", stringsList.get(4));
+        assertAll("Сценарий проверки метода add() со сдвигом элементов в лево",
+                () -> assertEquals(5, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3)),
+                () -> assertEquals("!", stringsList.get(4))
+        );
     }
 
     @Test
