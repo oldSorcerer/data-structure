@@ -1,6 +1,7 @@
 package io.sancta.sanctorum.structures.list;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -41,6 +42,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void indexOf() {
         stringsList = new ArrayList<>(3);
         stringsList.add("меня");
@@ -106,12 +108,14 @@ class ArrayListTest {
         stringsList.add("!");
         stringsList.add(0, "Привет");
         stringsList.add(1, "меня");
-        assertEquals(5, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
-        assertEquals("!", stringsList.get(4));
+        assertAll(" ",
+                () -> assertEquals(5, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3)),
+                () -> assertEquals("!", stringsList.get(4))
+        );
     }
 
     @Test
@@ -121,11 +125,13 @@ class ArrayListTest {
         stringsList.add("зовут");
         stringsList.add("Собака");
         stringsList.add(1, "меня");
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll(" ",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
@@ -135,33 +141,39 @@ class ArrayListTest {
         stringsList.add("зовут");
         stringsList.add(0, "Привет");
         stringsList.add("Собака");
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll(" ",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
     void removeLeft() {
         fillList5Strings();
         stringsList.remove(1);
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll(" ",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
     void removeRight() {
         fillList5Strings();
         stringsList.remove(3);
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals(",", stringsList.get(1));
-        assertEquals("меня", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll(" ",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals(",", stringsList.get(1)),
+                () -> assertEquals("меня", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
     }
 
     @Test
