@@ -58,6 +58,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void add() {
         fillListFourStrings();
         assertAll("Сценарий проверки метода add()",
@@ -70,6 +71,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void addWithCapacity() {
         stringsList = new ArrayList<>(2);
         fillListFourStrings();
@@ -83,6 +85,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void addWithRecreateLeft() {
         stringsList = new ArrayList<>(3);
         stringsList.add("меня");
@@ -101,6 +104,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void addWithLeftReserve() {
         stringsList = new ArrayList<>(3);
         stringsList.add("зовут");
@@ -119,6 +123,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void addWithLeftShift() {
         stringsList = new ArrayList<>(4);
         stringsList.add("Привет");
@@ -135,6 +140,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void addWithRightShift() {
         stringsList = new ArrayList<>(4);
         stringsList.add("меня");
@@ -151,6 +157,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void removeLeft() {
         fillList5Strings();
         stringsList.remove(1);
@@ -164,6 +171,7 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void removeRight() {
         fillList5Strings();
         stringsList.remove(3);
@@ -177,21 +185,25 @@ class ArrayListTest {
     }
 
     @Test
+    @DisplayName("indexOf")
     void remove() throws NoSuchFieldException, IllegalAccessException {
         stringsList = new ArrayList<>(100);
         fillList5Strings();
         stringsList.remove(1);
-        assertEquals(4, stringsList.size());
-        assertEquals("Привет", stringsList.get(0));
-        assertEquals("меня", stringsList.get(1));
-        assertEquals("зовут", stringsList.get(2));
-        assertEquals("Собака", stringsList.get(3));
+        assertAll(" ",
+                () -> assertEquals(4, stringsList.size()),
+                () -> assertEquals("Привет", stringsList.get(0)),
+                () -> assertEquals("меня", stringsList.get(1)),
+                () -> assertEquals("зовут", stringsList.get(2)),
+                () -> assertEquals("Собака", stringsList.get(3))
+        );
         Field f = ArrayList.class.getDeclaredField("items");
         f.setAccessible(true);
         assertEquals(50, ((Object[]) f.get(stringsList)).length);
     }
 
     @Test
+    @DisplayName("indexOf")
     void clear() {
         stringsList = new ArrayList<>();
         fillList5Strings();
