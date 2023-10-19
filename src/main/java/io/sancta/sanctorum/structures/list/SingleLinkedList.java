@@ -162,20 +162,23 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
         Segment<T> segment = firstSegment;
-        for (int i = 0; i < index; i++)
+        for (int i = 0; i < index; i++) {
             segment = segment.nextSegment;
+        }
 
         return segment.element;
     }
 
     @Override
     public void set(int index, T change) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
         Segment<T> segment = firstSegment;
         for (int i = 0; i < index; i++) {
@@ -188,8 +191,9 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
     public int indexOf(T element) {
         Segment<T> segment = firstSegment;
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(segment.element, element))
+            if (Objects.equals(segment.element, element)) {
                 return i;
+            }
             segment = segment.nextSegment;
         }
         return -1;
@@ -200,6 +204,10 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
         firstSegment = null;
         lastSegment = null;
         size = 0;
+    }
+
+    public boolean contains(T element){
+        return indexOf(element) >= 0;
     }
 
     @Override
