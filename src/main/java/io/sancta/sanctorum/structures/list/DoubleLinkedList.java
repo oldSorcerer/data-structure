@@ -5,18 +5,18 @@ import io.sancta.sanctorum.structures.Utils;
 
 import java.util.*;
 
-public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<T> {
+public class DoubleLinkedList<T> extends AbstractCollection<T> implements List<T> {
 
-    private DoubleSegment<T> firstSegment;
-    private DoubleSegment<T> lastSegment;
+    private Node<T> first;
+    private Node<T> last;
     private int size;
 
     public boolean quickSort;
 
-    public static class DoubleSegment <T> {
+    public static class Node<T> {
         public T element;
-        public DoubleSegment <T> nextSegment;
-        public DoubleSegment <T> prevSegment;
+        public Node<T> next;
+        public Node<T> prev;
     }
 
     @Override
@@ -35,70 +35,86 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
             throw new IllegalArgumentException("Not correct index");
         }
 
-        DoubleSegment<T> newSegment = new DoubleSegment<>();
-        newSegment.element = element;
+        Node<T> node = new Node<>();
+        node.element = element;
 
         if (size == 0) {
-            firstSegment = lastSegment = newSegment;
+            first = node;
+            last = node;
         } else if (size == index) {
-            lastSegment.nextSegment = newSegment;
-            newSegment.prevSegment = lastSegment;
-            lastSegment = newSegment;
+            last.next = node;
+            node.prev = last;
+            last = node;
         } else if (index == 0) {
-            firstSegment.prevSegment = newSegment;
-            newSegment.nextSegment = firstSegment;
-            firstSegment = newSegment;
+            first.prev = node;
+            node.next = first;
+            first = node;
         } else {
-            DoubleSegment<T> next = getSegment(index);
-            newSegment.nextSegment = next;
-            newSegment.prevSegment = next.prevSegment;
-            next.prevSegment.nextSegment = newSegment;
-            next.prevSegment = newSegment;
+            Node<T> corruntNode = getNode(index);
+            node.next = corruntNode;
+            node.prev = corruntNode.prev;
+            corruntNode.prev.next = node;
+            corruntNode.prev = node;
         }
         size++;
     }
 
     @Override
     public void remove(int index) {
-
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
         }
+
         if (size == 1) {
-            firstSegment = null;
-            lastSegment = null;
+            first = null;
+            last = null;
         } else if (size == 2) {
             if (index == 0) {
-                firstSegment = lastSegment;
-                lastSegment.prevSegment = null;
+                first = last;
+                last.prev = null;
             } else {
-                lastSegment = firstSegment;
-                firstSegment.nextSegment = null;
+                last = first;
+                first.next = null;
             }
         } else if (index == 0) {
-            firstSegment = firstSegment.nextSegment;
-            firstSegment.prevSegment = null;
+            first = first.next;
+            first.prev = null;
         } else if (index == size - 1) {
-            lastSegment = lastSegment.prevSegment;
-            lastSegment.nextSegment = null;
+            last = last.prev;
+            last.next = null;
         } else {
-            DoubleSegment<T> segment = getSegment(index);
-            segment.prevSegment.nextSegment = segment.nextSegment;
-            segment.nextSegment.prevSegment = segment.prevSegment;
+            Node<T> corruntNode = getNode(index);
+            corruntNode.prev.next = corruntNode.next;
+            corruntNode.next.prev = corruntNode.prev;
         }
         size--;
     }
 
     @Override
     public boolean remove(T element) {
-
         if (size == 0) {
             return false;
         }
+
         if (size == 1) {
-            if (Objects.equals(firstSegment.element, element)) {
-                firstSegment = null;
-                lastSegment = null;
+            if (Objects.equals(first.element, element)) {
+                first = null;
+                last = null;
+                size--;
+                return true;
+            }
+            return false;
+        }
+
+        if (size == 2) {
+            if (Objects.equals(first.element, element)) {
+                first = last;
+                last.prev = null;
+                size--;
+                return true;
+            } else if (Objects.equals(last.element, element)) {
+                last = first;
+                first.next = null;
                 size--;
                 return true;
             } else {
@@ -106,37 +122,25 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
             }
         }
 
-        if (size == 2)
-            if (Objects.equals(firstSegment.element, element)) {
-                firstSegment = lastSegment;
-                lastSegment.prevSegment = null;
-                size--;
-                return true;
-            } else if (Objects.equals(lastSegment.element, element)) {
-                lastSegment = firstSegment;
-                firstSegment.nextSegment = null;
-                size--;
-                return true;
-            } else return false;
-
-        if (Objects.equals(firstSegment.element, element)) {
-            firstSegment = firstSegment.nextSegment;
-            firstSegment.prevSegment = null;
+        if (Objects.equals(first.element, element)) {
+            first = first.next;
+            first.prev = null;
             size--;
             return true;
         } else {
-            DoubleSegment<T> previous = firstSegment;
+            Node<T> previous = first;
             for (int i = 1; i < size; i++) {
-                if (Objects.equals(previous.nextSegment.element, element)) {
-                    previous.nextSegment = previous.nextSegment.nextSegment;
-                    if (i == size - 1)
-                        lastSegment = previous;
-                    else
-                        previous.nextSegment.prevSegment = previous;
+                if (Objects.equals(previous.next.element, element)) {
+                    previous.next = previous.next.next;
+                    if (i == size - 1) {
+                        last = previous;
+                    } else {
+                        previous.next.prev = previous;
+                    }
                     size--;
                     return true;
                 }
-                previous = previous.nextSegment;
+                previous = previous.next;
             }
         }
         return false;
@@ -144,39 +148,42 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
 
     @Override
     public T get(int index) {
-        return getSegment(index).element;
+        return getNode(index).element;
     }
 
-    private DoubleSegment<T> getSegment(int index) {
+    private Node<T> getNode(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
         }
+
+        Node<T> node;
         if (index < size / 2) {
-            DoubleSegment<T> segment = firstSegment;
-            for (int i = 0; i < index; i++)
-                segment = segment.nextSegment;
-            return segment;
+            node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
         } else {
-            DoubleSegment<T> segment = lastSegment;
-            for (int i = size - 1; i > index; i--)
-                segment = segment.prevSegment;
-            return segment;
+            node = last;
+            for (int i = size - 1; i > index; i--) {
+                node = node.prev;
+            }
         }
+        return node;
     }
 
     @Override
-    public void set(int index, T change) {
-        DoubleSegment<T> segment = getSegment(index);
-        segment.element = change;
+    public void set(int index, T element) {
+        Node<T> corruntNode = getNode(index);
+        corruntNode.element = element;
     }
 
     @Override
     public int indexOf(T element) {
-        DoubleSegment<T> segment = firstSegment;
+        Node<T> segment = first;
         for (int i = 0; i < size; i++) {
             if (Objects.equals(segment.element, element))
                 return i;
-            segment = segment.nextSegment;
+            segment = segment.next;
         }
         /*DoubleSegment<T> segmentFirst = firstSegment;
         DoubleSegment<T> segmentLast = lastSegment;
@@ -193,8 +200,8 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
 
     @Override
     public void clear() {
-        firstSegment = null;
-        lastSegment = null;
+        first = null;
+        last = null;
         size = 0;
     }
 
@@ -202,63 +209,63 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
     @Override
     public void sort(boolean back) {
         if (quickSort)
-            sort(firstSegment, size, back);
+            sort(first, size, back);
         else {
             for (int i = size; i > 1; i--) {
-                DoubleSegment<T> segment = firstSegment;
+                Node<T> segment = first;
                 for (int j = 1; j < i; j++) {
-                    if (Utils.compare(segment.element, segment.nextSegment.element, back)) {
+                    if (Utils.compare(segment.element, segment.next.element, back)) {
                         T swap = segment.element;
-                        segment.element = segment.nextSegment.element;
-                        segment.nextSegment.element = swap;
+                        segment.element = segment.next.element;
+                        segment.next.element = swap;
                     }
-                    segment = segment.nextSegment;
+                    segment = segment.next;
                 }
             }
         }
     }
 
-    private void sort(DoubleSegment<T> begin, int size, boolean back) {
+    private void sort(Node<T> begin, int size, boolean back) {
 
         if (size <= 1) {
             return;
         }
-        Random r = new Random();
+        Random random = new Random();
 
-        DoubleSegment<T> segment = begin;
-        for (int i = r.nextInt(size); i > 0; i--) {
-            segment = segment.nextSegment;
+        Node<T> segment = begin;
+        for (int i = random.nextInt(size); i > 0; i--) {
+            segment = segment.next;
         }
 
         T tmp = segment.element;
         segment.element = begin.element;
         begin.element = tmp;
-        segment = begin.nextSegment;
-        int idx = 0;
+        segment = begin.next;
+        int index = 0;
 
-        DoubleSegment<T> current = begin;
+        Node<T> current = begin;
 
         for (int i = 1; i < size; i++) {
             if (Utils.compare(tmp, segment.element, back)) {
                 current.element = segment.element;
-                segment.element = current.nextSegment.element;
-                current.nextSegment.element = tmp;
-                current = current.nextSegment;
-                idx++;
+                segment.element = current.next.element;
+                current.next.element = tmp;
+                current = current.next;
+                index++;
             }
-            segment = segment.nextSegment;
+            segment = segment.next;
         }
 
-        sortParts(begin, size, back, idx, current);
+        sortParts(begin, size, back, index, current);
     }
 
-    private void sortParts(DoubleSegment<T> begin, int size, boolean back, int idx, DoubleSegment<T> current) {
+    private void sortParts(Node<T> begin, int size, boolean back, int idx, Node<T> current) {
         if (Runtime.getRuntime().availableProcessors() > 1) { // Проверка количество ядер процессора
             // Реализация многопоточности!
             Thread t = new Thread(() -> sort(begin, idx, back)); // Создаём поток и передаём ему лямбда-выражение
             // - что будет выполняться в этом потоке
             t.start(); // Запускаем фоновый поток
-            sort(current.nextSegment, size - idx - 1, back); // В текущем потоке сортируем вторую часть списка
+            sort(current.next, size - idx - 1, back); // В текущем потоке сортируем вторую часть списка
             try {
                 t.join(); // Ждём завершения фонового потока, если первая часть списка оказалась больше второй
             } catch (InterruptedException e) {
@@ -266,14 +273,14 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
             }
         } else {
             sort(begin, idx, back);
-            sort(current.nextSegment, size - idx - 1, back);
+            sort(current.next, size - idx - 1, back);
         }
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator() {
-            private DoubleSegment<T> segment = firstSegment;
+            private Node<T> segment = first;
 
             @Override
             public boolean hasNext() {
@@ -285,7 +292,7 @@ public class DoubleLinkedList <T> extends AbstractCollection<T> implements List<
                 if (segment == null)
                     throw new NoSuchElementException();
                 T temp = segment.element;
-                segment = segment.nextSegment;
+                segment = segment.next;
                 return temp;
             }
         };

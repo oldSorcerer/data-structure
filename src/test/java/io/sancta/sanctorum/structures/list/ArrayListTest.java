@@ -32,8 +32,8 @@ class ArrayListTest {
         stringsList.add("Собака");
     }
 
-    void m() {
-        assertAll(" ",
+    private void m() {
+        assertAll("Проверка расположения элементов в листе",
                 () -> assertEquals("Привет", stringsList.get(0)),
                 () -> assertEquals("меня", stringsList.get(1)),
                 () -> assertEquals("зовут", stringsList.get(2)),
@@ -58,7 +58,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("Проверка метода add с добавлением элемента в конец")
     void add() {
         fillListFourStrings();
         assertAll("Сценарий проверки метода add()",
@@ -71,7 +71,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("addWithCapacity")
     void addWithCapacity() {
         stringsList = new ArrayList<>(2);
         fillListFourStrings();
@@ -85,7 +85,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("add проверка добавления в начало")
     void addWithRecreateLeft() {
         stringsList = new ArrayList<>(3);
         stringsList.add("меня");
@@ -104,7 +104,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("addWithLeftReserve")
     void addWithLeftReserve() {
         stringsList = new ArrayList<>(3);
         stringsList.add("зовут");
@@ -123,7 +123,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("addWithLeftShift")
     void addWithLeftShift() {
         stringsList = new ArrayList<>(4);
         stringsList.add("Привет");
@@ -140,7 +140,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("addWithRightShift")
     void addWithRightShift() {
         stringsList = new ArrayList<>(4);
         stringsList.add("меня");
@@ -157,7 +157,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("removeLeft")
     void removeLeft() {
         fillList5Strings();
         stringsList.remove(1);
@@ -171,7 +171,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("removeRight")
     void removeRight() {
         fillList5Strings();
         stringsList.remove(3);
@@ -185,7 +185,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("remove")
     void remove() throws NoSuchFieldException, IllegalAccessException {
         stringsList = new ArrayList<>(100);
         fillList5Strings();
@@ -203,7 +203,7 @@ class ArrayListTest {
     }
 
     @Test
-    @DisplayName("indexOf")
+    @DisplayName("clear")
     void clear() {
         stringsList = new ArrayList<>();
         fillList5Strings();

@@ -9,13 +9,13 @@ import java.util.Objects;
 
 public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T> {
 
-    private Segment<T> firstSegment;
-    private Segment<T> lastSegment;
+    private Node<T> first;
+    private Node<T> last;
     private int size;
 
-    private static class Segment<T> {
+    private static class Node<T> {
         private T element;
-        private Segment<T> nextSegment;
+        private Node<T> next;
     }
 
     @Override
@@ -30,80 +30,86 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > size)
+        if (index < 0 || index > size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
-        Segment<T> newSegment = new Segment<>();
-        newSegment.element = element;
+        Node<T> node = new Node<>();
+        node.element = element;
 
         if (index == size) {
             if (size == 0) {
-                firstSegment = newSegment;
+                first = node;
             } else {
-                lastSegment.nextSegment = newSegment;
+                last.next = node;
             }
 
-            lastSegment = newSegment;
+            last = node;
             size++;
             return;
         }
 
         if (index == 0) {
-            newSegment.nextSegment = firstSegment;
-            firstSegment = newSegment;
+            node.next = first;
+            first = node;
             size++;
             return;
         }
-        Segment<T> previous = firstSegment;
+        Node<T> previous = first;
         for (int i = 1; i < index; i++) {
-            previous = previous.nextSegment;
+            previous = previous.next;
         }
-        newSegment.nextSegment = previous.nextSegment;
-        previous.nextSegment = newSegment;
+        node.next = previous.next;
+        previous.next = node;
         size++;
     }
 
     @Override
     public void remove(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
         if (size == 1) {
-            firstSegment = null;
-            lastSegment = null;
+            first = null;
+            last = null;
             size--;
             return;
         }
         if (size == 2) {
-            if (index == 0)
-                firstSegment = lastSegment;
-            else {
-                lastSegment = firstSegment;
-                firstSegment.nextSegment = null;
+            if (index == 0) {
+                first = last;
+            } else {
+                last = first;
+                first.next = null;
             }
             size--;
             return;
         }
         if (index == 0) {
-            firstSegment = firstSegment.nextSegment;
+            first = first.next;
             size--;
             return;
         }
-        Segment<T> previous = firstSegment;
-        for (int i = 1; i < index; i++)
-            previous = previous.nextSegment;
-        previous.nextSegment = previous.nextSegment.nextSegment;
+        Node<T> previous = first;
+        for (int i = 1; i < index; i++) {
+            previous = previous.next;
+        }
 
-        if (index == size - 1)
-            lastSegment = previous;
+        previous.next = previous.next.next;
+
+        if (index == size - 1) {
+            last = previous;
+        }
         size--;
     }
 
     @Override
     public boolean remove(T element) {
 
-        if (size == 0)
+        if (size == 0) {
             return false;
+        }
 
         if (size == 1) {
             return removeWhenOne(element);
@@ -112,107 +118,119 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
         if (size == 2) {
             return removeWhenTwo(element);
         }
+
         return findAndRemove(element);
     }
 
     private boolean removeWhenOne(T element) {
-        if (Objects.equals(firstSegment.element, element)) {
-            firstSegment = lastSegment = null;
+        if (Objects.equals(first.element, element)) {
+            first = null;
+            last = null;
             size--;
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     private boolean removeWhenTwo(T element) {
-        if (Objects.equals(firstSegment.element, element)) {
-            firstSegment = lastSegment;
+        if (Objects.equals(first.element, element)) {
+            first = last;
             size--;
             return true;
-        } else if (Objects.equals(lastSegment.element, element)) {
-            lastSegment = firstSegment;
-            firstSegment.nextSegment = null;
+        } else if (Objects.equals(last.element, element)) {
+            last = first;
+            first.next = null;
             size--;
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     private boolean findAndRemove(T element) {
 
-        if (Objects.equals(firstSegment.element, element)) {
-            firstSegment = firstSegment.nextSegment;
+        if (Objects.equals(first.element, element)) {
+            first = first.next;
             size--;
             return true;
         }
 
-        Segment<T> previous = firstSegment;
+        Node<T> previous = first;
         for (int i = 1; i < size; i++) {
-            if (Objects.equals(previous.nextSegment.element, element)) {
-                previous.nextSegment = previous.nextSegment.nextSegment;
+            if (Objects.equals(previous.next.element, element)) {
+                previous.next = previous.next.next;
                 if (i == size - 1)
-                    lastSegment = previous;
+                    last = previous;
                 size--;
                 return true;
             }
-            previous = previous.nextSegment;
+            previous = previous.next;
         }
         return false;
     }
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
+        }
 
-        Segment<T> segment = firstSegment;
-        for (int i = 0; i < index; i++)
-            segment = segment.nextSegment;
+        Node<T> node = first;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
 
-        return segment.element;
+        return node.element;
     }
 
     @Override
     public void set(int index, T change) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Not correct index");
-
-        Segment<T> segment = firstSegment;
-        for (int i = 0; i < index; i++) {
-            segment = segment.nextSegment;
         }
-        segment.element = change;
+
+        Node<T> node = first;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        node.element = change;
     }
 
     @Override
     public int indexOf(T element) {
-        Segment<T> segment = firstSegment;
+        Node<T> node = first;
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(segment.element, element))
+            if (Objects.equals(node.element, element)) {
                 return i;
-            segment = segment.nextSegment;
+            }
+            node = node.next;
         }
         return -1;
     }
 
     @Override
     public void clear() {
-        firstSegment = null;
-        lastSegment = null;
+        first = null;
+        last = null;
         size = 0;
+    }
+
+    public boolean contains(T element){
+        return indexOf(element) >= 0;
     }
 
     @Override
     public void sort(boolean back) {
         for (int i = size; i > 1; i--) {
-            Segment<T> segment = firstSegment;
+            Node<T> node = first;
             for (int j = 1; j < i; j++) {
-                if (Utils.compare(segment.element, segment.nextSegment.element, back)) {
-                    T swap = segment.element;
-                    segment.element = segment.nextSegment.element;
-                    segment.nextSegment.element = swap;
+                if (Utils.compare(node.element, node.next.element, back)) {
+                    T swap = node.element;
+                    node.element = node.next.element;
+                    node.next.element = swap;
                 }
-                segment = segment.nextSegment;
+                node = node.next;
             }
         }
     }
@@ -221,19 +239,19 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
     public Iterator<T> iterator() {
         return new Iterator<>() {
 
-            private Segment<T> segment = firstSegment;
+            private Node<T> node = first;
 
             @Override
             public boolean hasNext() {
-                return segment != null;
+                return node != null;
             }
 
             @Override
             public T next() {
-                if (segment == null)
+                if (node == null)
                     throw new NoSuchElementException();
-                T temp = segment.element;
-                segment = segment.nextSegment;
+                T temp = node.element;
+                node = node.next;
                 return temp;
             }
         };
