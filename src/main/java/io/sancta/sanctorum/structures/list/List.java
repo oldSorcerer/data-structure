@@ -16,7 +16,7 @@ public interface List<T> extends Iterable<T> {
 
     T get(int index);
 
-    void set(int index, T change);
+    void set(int index, T element);
 
     int indexOf(T element);
 
