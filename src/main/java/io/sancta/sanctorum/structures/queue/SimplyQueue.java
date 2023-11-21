@@ -4,13 +4,13 @@ import io.sancta.sanctorum.structures.AbstractCollection;
 
 public class SimplyQueue<T> extends AbstractCollection<T> implements Queue<T> {
 
-    private Segment<T> firstSegment;
-    private Segment<T> lastSegment;
+    private Node<T> first;
+    private Node<T> last;
     private int size;
 
-    private static class Segment<T> {
+    private static class Node<T> {
         private T element;
-        private Segment<T> nextSegment;
+        private Node<T> next;
     }
 
     @Override
@@ -19,19 +19,19 @@ public class SimplyQueue<T> extends AbstractCollection<T> implements Queue<T> {
     }
 
     @Override
-    public void put(T elementToAdd) {
-
-        if (elementToAdd == null) {
+    public void put(T element) {
+        if (element == null) {
             throw new IllegalArgumentException("New element cannot be null");
         }
-        Segment<T> newSegment = new Segment<>();
-        newSegment.element = elementToAdd;
+
+        Node<T> node = new Node<>();
+        node.element = element;
         if (size == 0) {
-            firstSegment = newSegment;
+            first = node;
         } else {
-            lastSegment.nextSegment = newSegment;
+            last.next = node;
         }
-        lastSegment = newSegment;
+        last = node;
         size++;
     }
 
@@ -40,7 +40,7 @@ public class SimplyQueue<T> extends AbstractCollection<T> implements Queue<T> {
         if (size == 0) {
             return null;
         }
-        return firstSegment.element;
+        return first.element;
     }
 
     @Override
@@ -48,8 +48,8 @@ public class SimplyQueue<T> extends AbstractCollection<T> implements Queue<T> {
         if (size == 0) {
             return null;
         }
-        T retElement = firstSegment.element;
-        firstSegment = firstSegment.nextSegment;
+        T retElement = first.element;
+        first = first.next;
         size--;
         return retElement;
     }

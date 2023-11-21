@@ -2,7 +2,7 @@ package io.sancta.sanctorum.structures.tree;
 
 public interface Tree<T> extends Iterable<T> {
 
-    int getSizeTree();
+    int getSize();
 
     boolean add(T element);
 

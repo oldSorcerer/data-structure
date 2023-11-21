@@ -1,8 +1,7 @@
-package io.sancta.sanctorum.structures.list;
+package io.sancta.sanctorum.structures.tree;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import io.sancta.sanctorum.structures.tree.SimplyTree;
 
 import java.util.Random;
 
@@ -27,7 +26,7 @@ class SimpleTreeTest {
 
         assertFalse(tree.add(5));
         assertFalse(tree.add(1));
-        assertEquals(5, tree.getSizeTree());
+        assertEquals(5, tree.getSize());
     }
 
     @Test

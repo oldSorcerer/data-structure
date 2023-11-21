@@ -2,7 +2,7 @@ package io.sancta.sanctorum.structures.queue;
 
 public interface Queue<T> {
 
-    void put(T elementToAdd);
+    void put(T element);
 
     T peek();
 
