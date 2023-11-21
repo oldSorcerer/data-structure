@@ -13,7 +13,7 @@ public class DoubleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     public boolean quickSort;
 
-    public static class Node<T> {
+    private static class Node<T> {
         public T element;
         public Node<T> next;
         public Node<T> prev;
@@ -117,9 +117,8 @@ public class DoubleLinkedList<T> extends AbstractCollection<T> implements List<T
                 first.next = null;
                 size--;
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
 
         if (Objects.equals(first.element, element)) {
@@ -173,17 +172,18 @@ public class DoubleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public void set(int index, T element) {
-        Node<T> corruntNode = getNode(index);
-        corruntNode.element = element;
+        Node<T> node = getNode(index);
+        node.element = element;
     }
 
     @Override
     public int indexOf(T element) {
-        Node<T> segment = first;
+        Node<T> node = first;
         for (int i = 0; i < size; i++) {
-            if (Objects.equals(segment.element, element))
+            if (Objects.equals(node.element, element)) {
                 return i;
-            segment = segment.next;
+            }
+            node = node.next;
         }
         /*DoubleSegment<T> segmentFirst = firstSegment;
         DoubleSegment<T> segmentLast = lastSegment;
