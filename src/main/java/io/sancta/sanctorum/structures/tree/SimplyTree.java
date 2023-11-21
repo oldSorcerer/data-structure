@@ -6,11 +6,11 @@ import java.util.Random;
 public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
 
     private Node<T> root;
-    private int sizeTree;
+    private int size;
 
     @Override
-    public int getSizeTree() {
-        return sizeTree;
+    public int getSize() {
+        return size;
     }
 
     @Override
@@ -19,21 +19,21 @@ public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
         Node<T> parent = findNode(element, true);
 
         if (parent == null) {
-            root = new Node<T>();
+            root = new Node<>();
             root.element = element;
-            sizeTree++;
+            size++;
             return true;
         } else if (element.compareTo(parent.element) > 0) {
             parent.rightChild = new Node<T>();
             parent.rightChild.parent = parent;
             parent.rightChild.element = element;
-            sizeTree++;
+            size++;
             return true;
         } else if (element.compareTo(parent.element) < 0) {
             parent.leftChild = new Node<T>();
             parent.leftChild.parent = parent;
             parent.leftChild.element = element;
-            sizeTree++;
+            size++;
             return true;
         } else {
             return false;
@@ -76,7 +76,7 @@ public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
                 removeBothChildren(removeNode, false);
             }
         }
-        sizeTree--;
+        size--;
         return true;
     }
 
@@ -144,7 +144,7 @@ public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
 
             @Override
             public boolean hasNext() {
-                return counter < sizeTree;
+                return counter < size;
             }
 
             @Override
@@ -187,7 +187,7 @@ public class SimplyTree<T extends Comparable<T>> implements Tree<T> {
             return null;
 
         Node<T> current = root;
-        Node<T> parentNode = null;
+        Node<T> parentNode;
 
         do {
             if (element.compareTo(current.element) > 0) {

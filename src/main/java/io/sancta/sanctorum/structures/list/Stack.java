@@ -4,12 +4,12 @@ import io.sancta.sanctorum.structures.AbstractCollection;
 
 public class Stack <T> extends AbstractCollection<T> {
 
-    private Segment<T> lastSegment;
+    private Node<T> last;
     private int size;
 
-    private static class Segment<T> {
+    private static class Node<T> {
         private T element;
-        private Segment<T> nextSegment;
+        private Node<T> next;
     }
 
     @Override
@@ -17,31 +17,32 @@ public class Stack <T> extends AbstractCollection<T> {
         return size;
     }
 
-    public void push(T elementToAdd){
-        if (elementToAdd == null) {
+    public void push(T element){
+        if (element == null) {
             throw new IllegalArgumentException("New element cannot be null");
         }
-        Segment<T> newSegment = new Segment<>();
-        newSegment.element = elementToAdd;
-        newSegment.nextSegment = lastSegment;
-        lastSegment = newSegment;
+        Node<T> node = new Node<>();
+        node.element = element;
+        node.next = last;
+        last = node;
         size++;
     }
 
     public T pop(){
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
 
-        T retElement = lastSegment.element;
-        lastSegment = lastSegment.nextSegment;
+        T element = last.element;
+        last = last.next;
         size--;
-        return retElement;
+        return element;
     }
 
     public T peek(){
         if (size == 0) {
             return null;
         }
-        return lastSegment.element;
+        return last.element;
     }
 }
