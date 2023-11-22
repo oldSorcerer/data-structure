@@ -214,53 +214,7 @@ public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
     }
 
     @Override
-    public void sort(boolean back) {
-        sort(start, size, back);
-    }
+    public void sort(Comparator<T> comparator) {
 
-    private void sort(int begin, int size, boolean back) {
-        if (size <= 1) {
-            return;
-        }
-
-        Random r = new Random();
-        int index = r.nextInt(size);
-
-        Object tmp = items[begin + index];
-        items[begin + index] = items[begin];
-        items[begin] = tmp;
-        index = 0;
-
-        for (int i = 1; i < size; i++) {
-            if (Utils.compare((T) items[begin + index], (T) items[begin + i], back)) {
-                items[begin + index] = items[begin + i];
-                items[begin + i] = items[begin + index + 1];
-                items[begin + index + 1] = tmp;
-                index++;
-            }
-        }
-
-        sort(begin, index, back);
-        sort(begin + index + 1, size - index - 1, back);
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new Iterator() {
-
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < size;
-            }
-
-            @Override
-            public T next() {
-                if (index >= size)
-                    throw new NoSuchElementException();
-                return (T) items[start + index++];
-            }
-        };
     }
 }

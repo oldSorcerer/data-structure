@@ -1,11 +1,9 @@
 package io.sancta.sanctorum.structures.list;
 
 import io.sancta.sanctorum.structures.AbstractCollection;
-import io.sancta.sanctorum.structures.Utils;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T> {
 
@@ -30,9 +28,7 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public void add(int index, T element) {
-        if (index < 0 || index > size) {
-            throw new IllegalArgumentException("Not correct index");
-        }
+        checkPositionIndex(index);
 
         Node<T> node = new Node<>();
         node.element = element;
@@ -64,11 +60,18 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
         size++;
     }
 
+    public void addAll(Collection<? extends T> collection) {
+        addAll(size, collection);
+    }
+
+
+    public void addAll(int index, Collection<? extends T> collection) {
+        checkPositionIndex(index);
+    }
+
     @Override
     public void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("Not correct index");
-        }
+        checkElementIndex(index);
 
         if (size == 1) {
             first = null;
@@ -172,9 +175,7 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
 
     @Override
     public T get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("Not correct index");
-        }
+        checkElementIndex(index);
 
         Node<T> node = first;
         for (int i = 0; i < index; i++) {
@@ -185,16 +186,14 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
     }
 
     @Override
-    public void set(int index, T change) {
-        if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("Not correct index");
-        }
+    public void set(int index, T element) {
+        checkElementIndex(index);
 
         Node<T> node = first;
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
-        node.element = change;
+        node.element = element;
     }
 
     @Override
@@ -216,44 +215,138 @@ public class SingleLinkedList<T> extends AbstractCollection<T> implements List<T
         size = 0;
     }
 
-    public boolean contains(T element){
+    public boolean contains(T element) {
         return indexOf(element) >= 0;
     }
 
-    @Override
-    public void sort(boolean back) {
-        for (int i = size; i > 1; i--) {
-            Node<T> node = first;
-            for (int j = 1; j < i; j++) {
-                if (Utils.compare(node.element, node.next.element, back)) {
-                    T swap = node.element;
-                    node.element = node.next.element;
-                    node.next.element = swap;
-                }
-                node = node.next;
-            }
+    public Object[] toArray() {
+        Object[] result = new Object[size];
+        Node<T> node = first;
+        for (int i = 0; i < size; i++) {
+            result[i] = node.element;
+            node = node.next;
         }
+        return result;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<>() {
+    public void sort(Comparator<T> comparator) {
 
-            private Node<T> node = first;
+        Object[] array = this.toArray();
+        Arrays.sort(array, (Comparator) comparator);
 
-            @Override
-            public boolean hasNext() {
-                return node != null;
+        ListIterator<T> iterator = this.listIterator();
+
+        for (Object object : array) {
+            iterator.next();
+            iterator.set((T) object);
+        }
+    }
+
+    /* дополниельный код */
+
+    int modCount = 0;
+
+    Node<T> node(int index) {
+
+        Node<T> node = first;
+        for (int i = 0; i < index; i++)
+            node = node.next;
+        return node;
+    }
+
+    public ListIterator<T> listIterator() {
+        return listIterator(0);
+    }
+
+    public ListIterator<T> listIterator(int index) {
+        checkPositionIndex(index);
+        return new ListItr(index);
+    }
+
+    private class ListItr implements ListIterator<T> {
+        private Node<T> lastReturned;
+        private Node<T> next;
+        private int nextIndex;
+        private int expectedModCount = modCount;
+
+        ListItr(int index) {
+            // assert isPositionIndex(index);
+            next = (index == size) ? null : node(index);
+            nextIndex = index;
+        }
+
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        public T next() {
+            checkForComodification();
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            lastReturned = next;
+            next = next.next;
+            nextIndex++;
+            return lastReturned.element;
+        }
+
+        public boolean hasPrevious() {
+            return nextIndex > 0;
+        }
+
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+
+        public void set(T e) {
+            if (lastReturned == null)
+                throw new IllegalStateException();
+            checkForComodification();
+            lastReturned.element = e;
+        }
+
+        public void forEachRemaining(Consumer<? super T> action) {
+            Objects.requireNonNull(action);
+            while (modCount == expectedModCount && nextIndex < size) {
+                action.accept(next.element);
+                lastReturned = next;
+                next = next.next;
+                nextIndex++;
             }
+            checkForComodification();
+        }
 
-            @Override
-            public T next() {
-                if (node == null)
-                    throw new NoSuchElementException();
-                T temp = node.element;
-                node = node.next;
-                return temp;
-            }
-        };
+        final void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+        }
+    }
+
+    private boolean isElementIndex(int index) {
+        return index >= 0 && index < size;
+    }
+
+    private boolean isPositionIndex(int index) {
+        return index >= 0 && index <= size;
+    }
+
+
+    private String outOfBoundsMsg(int index) {
+        return "Index: " + index + ", Size: " + size;
+    }
+
+    private void checkElementIndex(int index) {
+        if (!isElementIndex(index))
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+    }
+
+    private void checkPositionIndex(int index) {
+        if (!isPositionIndex(index))
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
     }
 }
