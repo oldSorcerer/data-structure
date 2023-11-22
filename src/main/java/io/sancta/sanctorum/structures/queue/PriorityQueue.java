@@ -13,29 +13,6 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T
         this.min = min;
     }
 
-    private int leftChild(int number) {
-        number = 2 * number + 1;
-        if (number >= list.size()) {
-            return -1;
-        }
-        return number;
-    }
-
-    private int rightChild(int number) {
-        number = 2 * number + 2;
-        if (number >= list.size()) {
-            return -1;
-        }
-        return number;
-    }
-
-    private int parent(int number) {
-        if (number == 0) {
-            return -1;
-        }
-        return (number - 1) / 2;
-    }
-
     @Override
     public int size() {
         return list.size();
@@ -82,5 +59,28 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T
             }
         }
         return element;
+    }
+
+    private int leftChild(int number) {
+        number = 2 * number + 1;
+        if (number >= list.size()) {
+            return -1;
+        }
+        return number;
+    }
+
+    private int rightChild(int number) {
+        number = 2 * number + 2;
+        if (number >= list.size()) {
+            return -1;
+        }
+        return number;
+    }
+
+    private int parent(int number) {
+        if (number == 0) {
+            return -1;
+        }
+        return (number - 1) / 2;
     }
 }

@@ -1,6 +1,4 @@
-package io.sancta.sanctorum.structures.list;
-
-import io.sancta.sanctorum.structures.AbstractCollection;
+package io.sancta.sanctorum.structures;
 
 public class Stack <T> extends AbstractCollection<T> {
 

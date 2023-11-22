@@ -1,8 +1,8 @@
 package io.sancta.sanctorum.structures.list;
 
-import io.sancta.sanctorum.structures.Utils;
+import java.util.Comparator;
 
-public interface List<T> extends Iterable<T> {
+public interface List<T> {
 
     int size();
 
@@ -22,13 +22,6 @@ public interface List<T> extends Iterable<T> {
 
     void clear();
 
-    void sort(boolean back);
+    void sort(Comparator<T> comparator);
 
-    default T min() {
-        return Utils.extremum(this, false);
-    }
-
-    default T max() {
-        return Utils.extremum(this, true);
-    }
 }

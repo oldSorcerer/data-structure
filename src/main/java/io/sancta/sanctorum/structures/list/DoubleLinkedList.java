@@ -1,7 +1,6 @@
 package io.sancta.sanctorum.structures.list;
 
 import io.sancta.sanctorum.structures.AbstractCollection;
-import io.sancta.sanctorum.structures.Utils;
 
 import java.util.*;
 
@@ -205,96 +204,9 @@ public class DoubleLinkedList<T> extends AbstractCollection<T> implements List<T
         size = 0;
     }
 
-
     @Override
-    public void sort(boolean back) {
-        if (quickSort)
-            sort(first, size, back);
-        else {
-            for (int i = size; i > 1; i--) {
-                Node<T> segment = first;
-                for (int j = 1; j < i; j++) {
-                    if (Utils.compare(segment.element, segment.next.element, back)) {
-                        T swap = segment.element;
-                        segment.element = segment.next.element;
-                        segment.next.element = swap;
-                    }
-                    segment = segment.next;
-                }
-            }
-        }
+    public void sort(Comparator<T> comparator) {
+
     }
 
-    private void sort(Node<T> begin, int size, boolean back) {
-
-        if (size <= 1) {
-            return;
-        }
-        Random random = new Random();
-
-        Node<T> segment = begin;
-        for (int i = random.nextInt(size); i > 0; i--) {
-            segment = segment.next;
-        }
-
-        T tmp = segment.element;
-        segment.element = begin.element;
-        begin.element = tmp;
-        segment = begin.next;
-        int index = 0;
-
-        Node<T> current = begin;
-
-        for (int i = 1; i < size; i++) {
-            if (Utils.compare(tmp, segment.element, back)) {
-                current.element = segment.element;
-                segment.element = current.next.element;
-                current.next.element = tmp;
-                current = current.next;
-                index++;
-            }
-            segment = segment.next;
-        }
-
-        sortParts(begin, size, back, index, current);
-    }
-
-    private void sortParts(Node<T> begin, int size, boolean back, int idx, Node<T> current) {
-        if (Runtime.getRuntime().availableProcessors() > 1) { // Проверка количество ядер процессора
-            // Реализация многопоточности!
-            Thread t = new Thread(() -> sort(begin, idx, back)); // Создаём поток и передаём ему лямбда-выражение
-            // - что будет выполняться в этом потоке
-            t.start(); // Запускаем фоновый поток
-            sort(current.next, size - idx - 1, back); // В текущем потоке сортируем вторую часть списка
-            try {
-                t.join(); // Ждём завершения фонового потока, если первая часть списка оказалась больше второй
-            } catch (InterruptedException e) {
-                // Во время ожидания поток может быть прерван - это проверяемое исключение
-            }
-        } else {
-            sort(begin, idx, back);
-            sort(current.next, size - idx - 1, back);
-        }
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new Iterator() {
-            private Node<T> segment = first;
-
-            @Override
-            public boolean hasNext() {
-                return segment != null;
-            }
-
-            @Override
-            public T next() {
-                if (segment == null)
-                    throw new NoSuchElementException();
-                T temp = segment.element;
-                segment = segment.next;
-                return temp;
-            }
-        };
-    }
 }

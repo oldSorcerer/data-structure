@@ -8,32 +8,32 @@ class SingleLinkedListTest {
 
     @Test
     void add() {
-        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add("Привет");
-        stringSingleLinkedList.add("меня");
-        stringSingleLinkedList.add("зовут");
-        stringSingleLinkedList.add("Собака");
-        assertEquals(4, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0));
-        assertEquals("меня", stringSingleLinkedList.get(1));
-        assertEquals("зовут", stringSingleLinkedList.get(2));
-        assertEquals("Собака", stringSingleLinkedList.get(3));
+        SingleLinkedList<String> list = new SingleLinkedList<>();
+        list.add("Привет");
+        list.add("меня");
+        list.add("зовут");
+        list.add("Собака");
+        assertEquals(4, list.size());
+        assertEquals("Привет", list.get(0));
+        assertEquals("меня", list.get(1));
+        assertEquals("зовут", list.get(2));
+        assertEquals("Собака", list.get(3));
     }
 
     @Test
     void addWithIndex() {
-        SingleLinkedList<String> stringSingleLinkedList = new SingleLinkedList<>();
-        stringSingleLinkedList.add("меня");
-        stringSingleLinkedList.add("зовут");
-        stringSingleLinkedList.add("Собака");
-        stringSingleLinkedList.add(0, "Привет");
-        stringSingleLinkedList.add(1, ",");
-        assertEquals(5, stringSingleLinkedList.size());
-        assertEquals("Привет", stringSingleLinkedList.get(0));
-        assertEquals(",", stringSingleLinkedList.get(1));
-        assertEquals("меня", stringSingleLinkedList.get(2));
-        assertEquals("зовут", stringSingleLinkedList.get(3));
-        assertEquals("Собака", stringSingleLinkedList.get(4));
+        SingleLinkedList<String> list = new SingleLinkedList<>();
+        list.add("меня");
+        list.add("зовут");
+        list.add("Собака");
+        list.add(0, "Привет");
+        list.add(1, ",");
+        assertEquals(5, list.size());
+        assertEquals("Привет", list.get(0));
+        assertEquals(",", list.get(1));
+        assertEquals("меня", list.get(2));
+        assertEquals("зовут", list.get(3));
+        assertEquals("Собака", list.get(4));
     }
 
     @Test
@@ -64,7 +64,7 @@ class SingleLinkedListTest {
             SingleLinkedList<String> list = new SingleLinkedList<>();
             list.set(3, " ");
             fail("No exception");
-        } catch (IllegalArgumentException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
     }
 
@@ -371,66 +371,6 @@ class SingleLinkedListTest {
         list.add("Собака");
         list.clear();
         assertEquals(0, list.size());
-    }
-
-    @Test
-    void sort() {
-        SingleLinkedList<Integer> list = new SingleLinkedList<>();
-        list.add(5);
-        list.add(4);
-        list.add(-9);
-        list.add(-25);
-        list.add(50);
-        list.add(78);
-        list.add(20);
-        list.add(-25);
-        list.sort(false);
-
-        System.out.println(list.get(0));
-        for (int i = 1; i < list.size(); i++) {
-            assertTrue(list.get(i - 1) <= list.get(i));
-            System.out.println(list.get(i));
-        }
-    }
-
-    @Test
-    void sortBack() {
-        SingleLinkedList<Integer> list = new SingleLinkedList<>();
-        list.add(5);
-        list.add(4);
-        list.add(-9);
-        list.add(-25);
-        list.add(50);
-        list.add(78);
-        list.add(20);
-        list.add(-25);
-        list.sort(true);
-
-        System.out.println(list.get(0));
-        for (int i = 1; i < list.size(); i++) {
-            assertTrue(list.get(i - 1) >= list.get(i));
-            System.out.println(list.get(i));
-        }
-    }
-
-    @Test
-    void iterator() {
-        SingleLinkedList<Integer> list = new SingleLinkedList<>();
-        list.add(5);
-        list.add(4);
-        list.add(-9);
-        list.add(-25);
-        list.add(50);
-        list.add(78);
-        list.add(20);
-        list.add(-25);
-
-        int idx = 0;
-
-        for (Integer i : list)
-            assertEquals(list.get(idx++), i);
-
-        assertEquals(list.size(), idx);
     }
 }
 /*
