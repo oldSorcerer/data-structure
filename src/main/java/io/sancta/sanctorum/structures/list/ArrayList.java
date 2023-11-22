@@ -1,7 +1,6 @@
 package io.sancta.sanctorum.structures.list;
 
 import io.sancta.sanctorum.structures.AbstractCollection;
-import io.sancta.sanctorum.structures.Utils;
 
 import java.util.*;
 
