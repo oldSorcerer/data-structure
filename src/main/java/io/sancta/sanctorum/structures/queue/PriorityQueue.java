@@ -1,7 +1,6 @@
 package io.sancta.sanctorum.structures.queue;
 
 import io.sancta.sanctorum.structures.AbstractCollection;
-import io.sancta.sanctorum.structures.Utils;
 import io.sancta.sanctorum.structures.list.ArrayList;
 
 public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T> implements Queue<T> {
@@ -23,11 +22,11 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T
         list.add(element);
         int index = list.size() - 1;
 
-        while (parent(index) >= 0 && Utils.compare(list.get(index), list.get(parent(index)), min)) {
-            list.set(index, list.get(parent(index)));
-            list.set(parent(index), element);
-            index = parent(index);
-        }
+//        while (parent(index) >= 0 && Utils.compare(list.get(index), list.get(parent(index)), min)) {
+//            list.set(index, list.get(parent(index)));
+//            list.set(parent(index), element);
+//            index = parent(index);
+//        }
     }
 
     @Override
@@ -42,22 +41,22 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractCollection<T
         list.remove(list.size() - 1);
         int index = 0;
 
-        while ((leftChild(index) >= 0 && Utils.compare(list.get(leftChild(index)), list.get(index), min)) ||
-               (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(index), min))) {
-            // Меняем на правого ребёнка, когда есть правый ребёнок, который приоритетнее, чем левый
-            // иначе меняем на левого
-            if (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(leftChild(index)), min)) {
-                T tmp = list.get(index);
-                list.set(index, list.get(rightChild(index)));
-                list.set(rightChild(index), tmp);
-                index = rightChild(index);
-            } else {
-                T tmp = list.get(index);
-                list.set(index, list.get(leftChild(index)));
-                list.set(leftChild(index), tmp);
-                index = leftChild(index);
-            }
-        }
+//        while ((leftChild(index) >= 0 && Utils.compare(list.get(leftChild(index)), list.get(index), min)) ||
+//               (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(index), min))) {
+//            // Меняем на правого ребёнка, когда есть правый ребёнок, который приоритетнее, чем левый
+//            // иначе меняем на левого
+//            if (rightChild(index) >= 0 && Utils.compare(list.get(rightChild(index)), list.get(leftChild(index)), min)) {
+//                T tmp = list.get(index);
+//                list.set(index, list.get(rightChild(index)));
+//                list.set(rightChild(index), tmp);
+//                index = rightChild(index);
+//            } else {
+//                T tmp = list.get(index);
+//                list.set(index, list.get(leftChild(index)));
+//                list.set(leftChild(index), tmp);
+//                index = leftChild(index);
+//            }
+//        }
         return element;
     }
 
