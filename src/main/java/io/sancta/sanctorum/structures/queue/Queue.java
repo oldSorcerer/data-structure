@@ -6,5 +6,9 @@ public interface Queue<T> {
 
     T peek();
 
-    T poll();
+    T pull();
+
+    T firstElement();
+
+    T lastElement();
 }
